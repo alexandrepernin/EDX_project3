@@ -6,4 +6,9 @@
 
 {% block body %}
     <h1>Place your orders here</h1>
+    <ul>
+      {% for pizza in Pizzas %}
+      <li> {{pizza}} </li>
+      {% endfor %}
+    </ul>
 {% endblock %}
