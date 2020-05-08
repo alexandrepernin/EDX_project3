@@ -1,18 +1,19 @@
 {% extends "orders/base.html" %}
-
+{% load static %}
+<img src="{% static "orders/pizzaicon.jpg" %}" alt="My image">
 {% block body %}
-{% if message %}
-    <div>
-        {{ message }}
-    </div>
-{% endif %}
+<img src ="{% static 'orders/pizzaicon.png' %}">
 <form action="{% url 'login' %}" method="post" class="form-signin">
   {% csrf_token %}
-  <h1 class='text-center'>Please sign in</h1>
+  <h1 class='text-center'>Sign in</h1>
+  <br>
   <label for="inputEmail" class="sr-only">Email address</label>
   <input name="username" type="username" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
   <label for="inputPassword" class="sr-only">Password</label>
   <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+  {% if message %}
+      <div>{{ message }}</div>
+  {% endif %}
   <br>
   <button class="btn btn-lg btn-primary btn-block" type="submit" value="Login">Sign in</button>
   <br>
