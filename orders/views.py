@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.urls import reverse
 
 from .models import Pizza
@@ -34,7 +35,14 @@ def signup_view(request):
         username = request.POST["username"]
         email = request.POST["email"]
         password = request.POST["password"]
-        return HttpResponseRedirect(reverse("index"))
+        new_user = User.objects.create_user(username, email, password)
+        new_user.save()
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            render(request, "orders/signup.html", {"message": "A problem has occurred."})
 
 def logout_view(request):
     logout(request)
