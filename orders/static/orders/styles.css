@@ -1,3 +1,17 @@
 .text-center {
   text-align: center;
 }
+
+.image {
+  width:60%;
+  -ms-interpolation-mode:bicubic;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#signin_button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
