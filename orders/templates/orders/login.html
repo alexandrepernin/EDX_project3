@@ -1,19 +1,35 @@
-{% extends "orders/base.html" %}
+{% extends "orders/base_auth.html" %}
+{% load static %}
+
+{% block title %}
+    Login
+{% endblock %}
+
 {% block body %}
-<form action="{% url 'login' %}" method="post" class="form-signin">
-  {% csrf_token %}
-  <h1 class='text-center'>Sign in</h1>
+<div class="col-1"></div>
+<div class="col-2">
   <br>
-  <label for="inputEmail" class="sr-only">Email address</label>
-  <input name="username" type="username" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
-  <label for="inputPassword" class="sr-only">Password</label>
-  <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-  {% if message %}
-      <div>{{ message }}</div>
-  {% endif %}
   <br>
-  <button id="signin_button" class="btn btn-dark" type="submit" value="Login">Sign in</button>
   <br>
-  <p> Don't have an account? <a href="{% url 'signup' %}">Create one</a> </p>
-</form>
+  <br>
+  <br>
+  <img class="image" src ="{% static "orders/pizzaicon.jpg" %}">
+  <form action="{% url 'login' %}" method="post" class="form-signin">
+    {% csrf_token %}
+    <h2 class='text-center'>Sign in</h2>
+    <br>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input name="username" type="username" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    <br>
+    <button id="signin_button" class="btn btn-dark" type="submit" value="Login">Sign in</button>
+    <br>
+    <p class="text-center"> Don't have an account? <a href="{% url 'signup' %}">Create one</a> </p>
+  </form>
+</div>
+<div class="col-1"></div>
 {% endblock %}

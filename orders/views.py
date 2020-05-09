@@ -35,7 +35,11 @@ def signup_view(request):
         username = request.POST["username"]
         email = request.POST["email"]
         password = request.POST["password"]
+        first_name = request.POST["first_name"]
+        last_name = request.POST["last_name"]
         new_user = User.objects.create_user(username, email, password)
+        new_user.first_name = first_name
+        new_user.last_name = last_name
         new_user.save()
         user = authenticate(request, username=username, password=password)
         if user is not None:

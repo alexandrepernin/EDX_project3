@@ -1,26 +1,60 @@
-{% extends "orders/base.html" %}
+{% extends "orders/base_auth.html" %}
+{% load static %}
+
+{% block title %}
+    Register
+{% endblock %}
 {% block body %}
-<form action="{% url 'signup' %}" method="post" class="form-signin">
-  {% csrf_token %}
-  <h1 class='text-center'>Sign up</h1>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Username</label>
-    <input name="username" type="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" required autofocus>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required autofocus>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
-    <small id="emailHelp" class="form-text text-muted">We'll never share your credentials with anyone.</small>
-  </div>
-  {% if message %}
-      <div>{{ message }}</div>
-  {% endif %}
-  <button id="signin_button" class="btn btn-danger" type="submit" value="Login">Sign up</button>
+<div class="col-4">
   <br>
-  <p> Already have an account? <a href="{% url 'login' %}">Sign in</a> </p>
-</form>
+  <br>
+  <br>
+  <br>
+  <br>
+  <img class="image" src ="{% static "orders/pizzaicon.jpg" %}">
+  <form id="signup_form" action="{% url 'signup' %}" method="post" class="form-signin">
+    {% csrf_token %}
+    <h2 class='text-center'>Sign up</h2>
+    <br>
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-3 col-form-label">First Name</label>
+        <div class="col-sm-9">
+          <input name="first_name" type="text" class="form-control" placeholder="Enter first name" id="inputEmail3">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-3 col-form-label">Last Name</label>
+        <div class="col-sm-9">
+          <input name="last_name" type="text" class="form-control" placeholder="Enter last name" id="inputEmail3">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-3 col-form-label">Username</label>
+        <div class="col-sm-9">
+          <input name="username" type="username" class="form-control" placeholder="Enter username" id="inputEmail3" required autofocus>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
+        <div class="col-sm-9">
+          <input name="email" type="email" class="form-control" placeholder="Enter email" id="inputEmail3" required autofocus>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputPassword3" class="col-sm-3 col-form-label">Password</label>
+        <div class="col-sm-9">
+          <input name="password" type="password" class="form-control" placeholder="Enter password" id="inputPassword3" required>
+        </div>
+    </div>
+    <small id="cred" class="form-text text-muted">We'll never share your credentials with anyone.</small>
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    <br>
+    <button id="signin_button" class="btn btn-danger" type="submit" value="Login">Sign up</button>
+    <br>
+    <p class="text-center"> Already have an account? <a href="{% url 'login' %}">Sign in</a> </p>
+  </form>
+</div>
+
 {% endblock %}
