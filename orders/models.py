@@ -12,9 +12,10 @@ class Pizza(models.Model):
     name = models.CharField(max_length=64)
     toppings = models.IntegerField()
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
+    price = models.FloatField()
 
     def __str__(self):
-        return "Pizza {}, {} with {} toppings of size {}".format(self.type, self.name, self.toppings, self.size)
+        return "Pizza {}, {} with {} toppings of size {}. {}$".format(self.type, self.name, self.toppings, self.size, self.price)
 
 class Topping(models.Model):
     name = models.CharField(max_length=64)
@@ -43,3 +44,12 @@ class Dinner(models.Model):
 
     def __str__(self):
         return "Dinner Platter #{}: {}. {}.".format(self.id, self.name, self.size)
+
+class Sub(models.Model):
+    name = models.CharField(max_length=64)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE)
+    price = models.FloatField()
+    extra = models.BooleanField()
+
+    def __str__(self):
+        return "Sub #{}: {}. {}.".format(self.id, self.name, self.size)
