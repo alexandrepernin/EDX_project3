@@ -9,20 +9,21 @@
         <link rel="icon" type="image/x-icon" href="{% static "orders/favicon.ico" %}">
     </head>
     <body>
+      <br>
+      <br>
       <div class="row">
-        <div class="col-5"></div>
-        <div class="col-2">
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <img class="image" src ="{% static "orders/pizzaicon.jpg" %}">
-          {% block body %}
-          {% endblock %}
+        <div class="col-1"></div>
+        <div class="col-4">
+          <img class="image_menu" src ="{% static "orders/pizzaicon.jpg" %}">
+          {% block menu %} {% endblock %}
         </div>
-        <div class="col-5"></div>
+        <div class="col-1"></div>
+        <div class="col-4">
+          <img class="image_menu" src ="{% static "orders/ordericon.jpg" %}">
+          {% block choice %} {% endblock %}
+        </div>
+        <div class="col-1"></div>
+        <div class="col-1">{% block exit %} {% endblock %}</div>
       </div>
     </body>
 </html>

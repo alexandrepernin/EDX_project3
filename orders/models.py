@@ -8,15 +8,22 @@ class Topping(models.Model):
         return "Topping #{}: {}".format(self.id, self.name)
 
 class Pizza(models.Model):
-    type = models.CharField(max_length=7, choices=[('regular', 'Regular'), ('sicilian', 'Sicilian')], default='regular')
+    type = models.CharField(max_length=8, choices=[('regular', 'Regular'), ('sicilian', 'Sicilian')], default='regular')
     name = models.CharField(max_length=7, choices=[('cheese', 'Cheese'), ('special', 'Special')], default='cheese')
     toppings_nb = models.IntegerField(default=0, choices=[(0,'No Topping'), (1,'1 Topping'), (2, '2 Topping'), (3,'3 Topping')])
     toppings = models.ManyToManyField(Topping, blank=True, related_name="pizzas")
     size = models.CharField(max_length=1,choices=[('S', 'Small'), ('L', 'Large')], default='S')
-    price = models.FloatField()
+    price_small = models.FloatField(default=0)
+    price_large = models.FloatField(default=0)
 
     def __str__(self):
-        return "Pizza {}, {} with {} toppings of {} ({}$)".format(self.type, self.name, self.toppings_nb, self.size, self.price)
+        if self.name=='cheese':
+            if self.toppings_nb==0:
+                return f"{self.type.capitalize()}: {self.name.capitalize()} without topping (Small: ${self.price_small} / Large: ${self.price_large})"
+            else:
+                return f"{self.type.capitalize()}: {self.name.capitalize()}, {self.toppings_nb} toppings (Small: ${self.price_small} / Large: ${self.price_large})"
+        else:
+            return f"{self.type.capitalize()}: {self.name.capitalize()} (Small: ${self.price_small} / Large: ${self.price_large})"
 
 class Pasta(models.Model):
     name = models.CharField(max_length=64)

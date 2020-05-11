@@ -4,14 +4,17 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-from .models import Pizza
+from .models import *
 # Create your views here.
 def index(request):
     if not request.user.is_authenticated:
         return render(request, "orders/login.html", {"message": None})
     context = {
         "user": request.user,
-        "Pizzas": Pizza.objects.all()
+        "Pizzas": Pizza.objects.all(),
+        "Toppings": Topping.objects.all(),
+        "Salads": Salad.objects.all(),
+        "Pastas": Pasta.objects.all()
     }
     return render(request, "orders/index.html", context)
 

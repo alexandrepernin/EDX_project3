@@ -1,15 +1,39 @@
 {% extends "orders/base.html" %}
 
-{% block title %}
-    Menu
+{% block  menu %}
+<br>
+<h2 class="text-center"> Menu </h2>
+<p> Pizzas </p>
+<ul>
+  {% for pizza in Pizzas %}
+  <li> {{pizza}} </li>
+  {% endfor %}
+</ul>
+<p> Toppings </p>
+<ul>
+  {% for topping in Toppings %}
+  <li> {{topping}} </li>
+  {% endfor %}
+</ul>
+<p> Salads </p>
+<ul>
+  {% for salad in Salads %}
+  <li> {{salad}} </li>
+  {% endfor %}
+</ul>
+<p> Pastas </p>
+<ul>
+  {% for pasta in Pastas %}
+  <li> {{pasta}} </li>
+  {% endfor %}
+</ul>
 {% endblock %}
 
-{% block body %}
-    <h1>Place your orders here</h1>
-    <ul>
-      {% for pizza in Pizzas %}
-      <li> {{pizza}} </li>
-      {% endfor %}
-      <li><a href="{% url 'logout' %}">Logout</a></li>
-    </ul>
+{% block choice %}
+<br>
+<h2 class="text-center">Orders</h2>
+{% endblock %}
+
+{% block exit %}
+<a href="{% url 'logout' %}" class="btn btn-outline-danger" role="button" aria-pressed="true"> Sign Out </a>
 {% endblock %}
