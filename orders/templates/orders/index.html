@@ -1,27 +1,34 @@
 {% extends "orders/base.html" %}
 
-{% block  menu %}
-<br>
-<h2 class="text-center"> Menu </h2>
-<p> Pizzas </p>
+{% block menu_left %}
+<p class="text-center"> Regular Pizzas </p>
 <ul>
-  {% for pizza in Pizzas %}
+  {% for pizza in Regular_Pizzas %}
   <li> {{pizza}} </li>
   {% endfor %}
 </ul>
-<p> Toppings </p>
+<p class="text-center"> Toppings </p>
 <ul>
   {% for topping in Toppings %}
   <li> {{topping}} </li>
   {% endfor %}
 </ul>
-<p> Salads </p>
+{% endblock %}
+
+{% block menu_right %}
+<p class="text-center"> Sicilian Pizzas </p>
+<ul>
+  {% for pizza in Sicilian_Pizzas %}
+  <li> {{pizza}} </li>
+  {% endfor %}
+</ul>
+<p class="text-center"> Salads </p>
 <ul>
   {% for salad in Salads %}
   <li> {{salad}} </li>
   {% endfor %}
 </ul>
-<p> Pastas </p>
+<p class="text-center"> Pastas </p>
 <ul>
   {% for pasta in Pastas %}
   <li> {{pasta}} </li>
@@ -30,8 +37,6 @@
 {% endblock %}
 
 {% block choice %}
-<br>
-<h2 class="text-center">Orders</h2>
 {% endblock %}
 
 {% block exit %}

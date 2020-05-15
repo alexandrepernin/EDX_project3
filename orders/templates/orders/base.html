@@ -15,15 +15,26 @@
         <div class="col-1"></div>
         <div class="col-4">
           <img class="image_menu" src ="{% static "orders/pizzaicon.jpg" %}">
-          {% block menu %} {% endblock %}
+          <br>
+          <h2 class="text-center"> Menu </h2>
         </div>
         <div class="col-1"></div>
         <div class="col-4">
           <img class="image_menu" src ="{% static "orders/ordericon.jpg" %}">
+          <br>
+          <h2 class="text-center">Orders</h2>
           {% block choice %} {% endblock %}
         </div>
         <div class="col-1"></div>
         <div class="col-1">{% block exit %} {% endblock %}</div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+            {% block menu_left %} {% endblock %}
+        </div>
+        <div class="col-3">
+            {% block menu_right %} {% endblock %}
+        </div>
       </div>
     </body>
 </html>

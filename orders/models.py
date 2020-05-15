@@ -15,15 +15,25 @@ class Pizza(models.Model):
     size = models.CharField(max_length=1,choices=[('S', 'Small'), ('L', 'Large')], default='S')
     price_small = models.FloatField(default=0)
     price_large = models.FloatField(default=0)
+    menu = models.BooleanField(default=False)
 
     def __str__(self):
-        if self.name=='cheese':
-            if self.toppings_nb==0:
-                return f"{self.type.capitalize()}: {self.name.capitalize()} without topping (Small: ${self.price_small} / Large: ${self.price_large})"
+        if self.menu==True:
+            if self.name=='cheese':
+                if self.toppings_nb==0:
+                    return f"{self.name.capitalize()}, without topping (S: ${self.price_small} / L: ${self.price_large})"
+                else:
+                    return f"{self.name.capitalize()}, {self.toppings_nb} toppings (S: ${self.price_small} / L: ${self.price_large})"
             else:
-                return f"{self.type.capitalize()}: {self.name.capitalize()}, {self.toppings_nb} toppings (Small: ${self.price_small} / Large: ${self.price_large})"
+                return f"{self.name.capitalize()} (S: ${self.price_small} / L: ${self.price_large})"
         else:
-            return f"{self.type.capitalize()}: {self.name.capitalize()} (Small: ${self.price_small} / Large: ${self.price_large})"
+            if self.name=='cheese':
+                if self.toppings_nb==0:
+                    return f"{self.type.capitalize()}: {self.name.capitalize()} without topping (S: ${self.price_small} / L: ${self.price_large})"
+                else:
+                    return f"{self.type.capitalize()}: {self.name.capitalize()}, {self.toppings_nb} toppings (S: ${self.price_small} / L: ${self.price_large})"
+            else:
+                return f"{self.type.capitalize()}: {self.name.capitalize()} (S: ${self.price_small} / L: ${self.price_large})"
 
 class Pasta(models.Model):
     name = models.CharField(max_length=64)
