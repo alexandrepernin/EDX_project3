@@ -23,17 +23,25 @@
           <img class="image_menu" src ="{% static "orders/ordericon.jpg" %}">
           <br>
           <h2 class="text-center">Orders</h2>
-          {% block choice %} {% endblock %}
         </div>
         <div class="col-1"></div>
         <div class="col-1">{% block exit %} {% endblock %}</div>
       </div>
       <div class="row">
         <div class="col-3">
-            {% block menu_left %} {% endblock %}
+          <br>
+          <br>
+          {% block menu_left %} {% endblock %}
         </div>
         <div class="col-3">
-            {% block menu_right %} {% endblock %}
+          <br>
+          <br>
+          {% block menu_right %} {% endblock %}
+        </div>
+        <div class="col-6">
+          <br>
+          <br>
+          {% block choice %} {% endblock %}
         </div>
       </div>
     </body>

@@ -34,3 +34,11 @@
   margin-left: 15%;
   margin-right: 15%;
 }
+
+ul {
+  list-style-type: none;
+}
+
+.padded {
+  padding-left:15%;
+}

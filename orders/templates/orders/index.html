@@ -1,14 +1,17 @@
 {% extends "orders/base.html" %}
+{% block title %}
+Menu
+{% endblock %}
 
 {% block menu_left %}
 <p class="text-center"> Regular Pizzas </p>
-<ul>
+<ul class="padded">
   {% for pizza in Regular_Pizzas %}
   <li> {{pizza}} </li>
   {% endfor %}
 </ul>
 <p class="text-center"> Toppings </p>
-<ul>
+<ul class="padded">
   {% for topping in Toppings %}
   <li> {{topping}} </li>
   {% endfor %}
@@ -37,6 +40,22 @@
 {% endblock %}
 
 {% block choice %}
+<p class="text-center"> Shopping Card </p>
+
+<p class="text-center"> Add items </p>
+<form>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Pizza</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-dark">Add</button>
+</form>
 {% endblock %}
 
 {% block exit %}
