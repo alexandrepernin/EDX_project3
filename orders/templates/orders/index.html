@@ -41,21 +41,86 @@ Menu
 
 {% block choice %}
 <p class="text-center"> Shopping Card </p>
-
+<hr>
 <p class="text-center"> Add items </p>
+
 <form>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Pizza</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="inputState">Pizzas</label>
+      <select id="inputState" class="form-control">
+        <option selected>Choose...</option>
+        <option>Regular</option>
+        <option>Sicilian</option>
+      </select>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">Type</label>
+      <select id="inputState" class="form-control">
+        <option selected>Choose...</option>
+        <option>Cheese</option>
+        <option>Special</option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="inputState">Toppings</label>
+      <select id="inputState" class="form-control">
+        <option selected>Choose...</option>
+        <option>0</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="inputState">Size</label>
+      <select id="inputState" class="form-control">
+        <option selected>Choose...</option>
+        <option>Small</option>
+        <option>Large</option>
+      </select>
+    </div>
   </div>
   <button type="submit" class="btn btn-dark">Add</button>
 </form>
+
+<br>
+<br>
+<div class="row">
+  <div class="col-6">
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputState">Salads</label>
+          <select id="inputState" class="form-control">
+            <option selected>Choose...</option>
+            <option>Garden Salad</option>
+            <option>Greek Salad</option>
+            <option>Antipasto</option>
+            <option>Salad w/Tuna</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-dark">Add</button>
+    </form>
+  </div>
+  <div class="col-6">
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputState">Pastas</label>
+          <select id="inputState" class="form-control">
+            <option selected>Choose...</option>
+            <option>Baked Ziti w/Mozzarella</option>
+            <option>Baked Ziti w/Meatballs</option>
+            <option>Baked Ziti w/Chicken</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-dark">Add</button>
+    </form>
+    </div>
+</div>
 {% endblock %}
 
 {% block exit %}
