@@ -1,10 +1,15 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+import logging
 
 from .models import *
+
+logger = logging.getLogger(__name__)
 # Create your views here.
 def index(request):
     if not request.user.is_authenticated:
@@ -18,6 +23,7 @@ def index(request):
         "Pastas": Pasta.objects.all(),
         "Orders": Order.objects.filter(delivered=False, user=request.user)
     }
+    logger.error("Processing code for index")
     return render(request, "orders/index.html", context)
 
 def login_view(request):
@@ -56,3 +62,14 @@ def signup_view(request):
 def logout_view(request):
     logout(request)
     return render(request, "orders/login.html", {"message": "Logged out."})
+
+@csrf_exempt
+def order_salad(request):
+    data = request.POST["salad_type"]
+    username=request.user.username
+    logger.error("Processing code for order_salad: {} for user {}".format(data, username))
+    salad = Salad.objects.filter(name=data)[0]
+    order = Order.objects.filter(delivered=False, user=request.user)[0]
+    order.salads.add(salad)
+    order.save()
+    return JsonResponse({"success": True})

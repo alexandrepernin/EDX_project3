@@ -108,11 +108,12 @@ Menu
 <br>
 <div class="row">
   <div class="col-6">
-    <form>
+    <form id="salad_form" method="post">
+      {% csrf_token %}
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputState">Salads</label>
-          <select id="inputState" class="form-control">
+          <select id="salad" class="form-control">
             <option selected>Choose...</option>
             <option>Garden Salad</option>
             <option>Greek Salad</option>
@@ -129,7 +130,7 @@ Menu
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputState">Pastas</label>
-          <select id="inputState" class="form-control">
+          <select id="salad_choice" class="form-control">
             <option selected>Choose...</option>
             <option>Baked Ziti w/Mozzarella</option>
             <option>Baked Ziti w/Meatballs</option>
@@ -145,4 +146,26 @@ Menu
 
 {% block exit %}
 <a href="{% url 'logout' %}" class="btn btn-outline-danger" role="button" aria-pressed="true"> Sign Out </a>
+{% endblock %}
+
+{% block js %}
+
+function post_new_salad_order() {
+  const request = new XMLHttpRequest();
+  var e = document.getElementById("salad");
+  var salad_choice = e.options[e.selectedIndex].text;
+  request.open('POST', '/order_salad');
+
+  request.onload = () => {
+      location.reload();
+  };
+  const data = new FormData();
+  data.append('salad_type', salad_choice);
+  request.send(data);
+};
+
+ document.addEventListener('DOMContentLoaded', () => {
+       document.querySelector('#salad_form').onsubmit = () => post_new_salad_order();
+  });
+
 {% endblock %}
