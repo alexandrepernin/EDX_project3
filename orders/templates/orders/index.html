@@ -41,6 +41,26 @@ Menu
 
 {% block choice %}
 <p class="text-center"> Shopping Card </p>
+<ul>
+  {% for order in Orders %}
+  <li> {{order}}: </li>
+  <ul>
+    {% for pizza in order.pizzas.all %}
+    <li> {{pizza}} </li>
+    {% endfor %}
+  </ul>
+  <ul>
+    {% for salad in order.salads.all %}
+    <li> {{salad}} </li>
+    {% endfor %}
+  </ul>
+  <ul>
+    {% for pasta in order.pastas.all %}
+    <li> {{pasta}} </li>
+    {% endfor %}
+  </ul>
+  {% endfor %}
+</ul>
 <hr>
 <p class="text-center"> Add items </p>
 

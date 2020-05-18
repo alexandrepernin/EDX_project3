@@ -15,7 +15,8 @@ def index(request):
         "Sicilian_Pizzas": Pizza.objects.filter(type='sicilian', menu=True),
         "Toppings": Topping.objects.all(),
         "Salads": Salad.objects.all(),
-        "Pastas": Pasta.objects.all()
+        "Pastas": Pasta.objects.all(),
+        "Orders": Order.objects.filter(delivered=False, user=request.user)
     }
     return render(request, "orders/index.html", context)
 

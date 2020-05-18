@@ -75,3 +75,7 @@ class Order(models.Model):
     pastas = models.ManyToManyField(Pasta, blank=True, related_name="orders")
     created = models.DateTimeField(auto_now_add=True)
     delivered = models.BooleanField(default=False)
+
+    def __str__(self):
+        date=self.created.strftime("%H:%M (%d-%b-%Y)")
+        return f"Order ID#{self.id}: [{date}] for {self.user.username}"
