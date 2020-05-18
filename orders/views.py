@@ -19,9 +19,9 @@ def index(request):
         "Regular_Pizzas": Pizza.objects.filter(type='regular', menu=True),
         "Sicilian_Pizzas": Pizza.objects.filter(type='sicilian', menu=True),
         "Toppings": Topping.objects.all(),
-        "Salads": Salad.objects.all(),
-        "Pastas": Pasta.objects.all(),
-        "Orders": Order.objects.filter(delivered=False, user=request.user)
+        "Salads": Salad.objects.filter(menu=True),
+        "Pastas": Pasta.objects.filter(menu=True),
+        "Orders": Order.objects.filter(validated=False, user=request.user)
     }
     logger.error("Processing code for index")
     return render(request, "orders/index.html", context)
@@ -68,8 +68,10 @@ def order_salad(request):
     data = request.POST["salad_type"]
     username=request.user.username
     logger.error("Processing code for order_salad: {} for user {}".format(data, username))
-    salad = Salad.objects.filter(name=data)[0]
-    order = Order.objects.filter(delivered=False, user=request.user)[0]
+    salad_menu = Salad.objects.filter(name=data)[0]
+    salad = Salad(menu=False, price=salad_menu.price, name=salad_menu.name)
+    salad.save()
+    order = Order.objects.filter(validated=False, user=request.user)[0]
     order.salads.add(salad)
     order.save()
     return JsonResponse({"success": True})

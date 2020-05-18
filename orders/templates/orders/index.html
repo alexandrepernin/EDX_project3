@@ -115,10 +115,9 @@ Menu
           <label for="inputState">Salads</label>
           <select id="salad" class="form-control">
             <option selected>Choose...</option>
-            <option>Garden Salad</option>
-            <option>Greek Salad</option>
-            <option>Antipasto</option>
-            <option>Salad w/Tuna</option>
+            {% for salad in Salads %}
+            <option>{{salad.name}}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
@@ -130,11 +129,11 @@ Menu
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputState">Pastas</label>
-          <select id="salad_choice" class="form-control">
+          <select id="pasta" class="form-control">
             <option selected>Choose...</option>
-            <option>Baked Ziti w/Mozzarella</option>
-            <option>Baked Ziti w/Meatballs</option>
-            <option>Baked Ziti w/Chicken</option>
+            {% for pasta in Pastas %}
+            <option>{{pasta.name}}</option>
+            {% endfor %}
           </select>
         </div>
       </div>

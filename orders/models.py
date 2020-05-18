@@ -40,6 +40,7 @@ class Pizza(models.Model):
 class Pasta(models.Model):
     name = models.CharField(max_length=64)
     price = models.FloatField()
+    menu = models.BooleanField(default=False)
 
     def __str__(self):
         return "Pasta #{}: {} ({}$)".format(self.id, self.name, self.price)
@@ -47,6 +48,7 @@ class Pasta(models.Model):
 class Salad(models.Model):
     name = models.CharField(max_length=64)
     price = models.FloatField()
+    menu = models.BooleanField(default=False)
 
     def __str__(self):
         return "Salad #{}: {} ({}$)".format(self.id, self.name, self.price)
@@ -55,6 +57,7 @@ class Dinner(models.Model):
     name = models.CharField(max_length=64)
     size = models.CharField(max_length=1,choices=[('S', 'Small'), ('L', 'Large')], default='S')
     price = models.FloatField()
+    menu = models.BooleanField(default=False)
 
     def __str__(self):
         return "Dinner Platter #{}: {}. {} ({}$)".format(self.id, self.name, self.size, self.prize)
@@ -64,6 +67,7 @@ class Sub(models.Model):
     size = models.CharField(max_length=1,choices=[('S', 'Small'), ('L', 'Large')], default='S')
     price = models.FloatField()
     extra = models.BooleanField()
+    menu = models.BooleanField(default=False)
 
     def __str__(self):
         return "Sub #{}: {}. {}.".format(self.id, self.name, self.size)
@@ -74,7 +78,7 @@ class Order(models.Model):
     salads = models.ManyToManyField(Salad, blank=True, related_name="orders")
     pastas = models.ManyToManyField(Pasta, blank=True, related_name="orders")
     created = models.DateTimeField(auto_now_add=True)
-    delivered = models.BooleanField(default=False)
+    validated = models.BooleanField(default=False)
 
     def __str__(self):
         date=self.created.strftime("%H:%M (%d-%b-%Y)")
