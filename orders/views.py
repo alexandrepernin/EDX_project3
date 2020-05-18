@@ -88,3 +88,16 @@ def order_pasta(request):
     order.pastas.add(pasta)
     order.save()
     return JsonResponse({"success": True})
+
+@csrf_exempt
+def order_pizza(request):
+    logger.error("Processing code for order_pizza")
+    username=request.user.username
+    name = request.POST["name"]
+    type = request.POST["type"]
+    size = request.POST["size"]
+    topping_nb = request.POST["toppings_nb"]
+    #pizza_menu = Pizza.objects.filter(menu=True, type=type, name=name, size=size, toppings_nb=topping_nb)[0]
+    logger.error("{}, {}, {} and {} for user {}".format(name, type, size, topping_nb, username))
+    #logger.error(str(pizza_menu))
+    return JsonResponse({"success": True})

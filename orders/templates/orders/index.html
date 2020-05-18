@@ -64,11 +64,12 @@ Menu
 <hr>
 <p class="text-center"> Add items </p>
 
-<form>
+<form id="pizza_form" method="post">
+  {% csrf_token %}
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="inputState">Pizzas</label>
-      <select id="inputState" class="form-control">
+      <select id="pizza_type" class="form-control">
         <option selected>Choose...</option>
         <option>Regular</option>
         <option>Sicilian</option>
@@ -76,7 +77,7 @@ Menu
     </div>
     <div class="form-group col-md-4">
       <label for="inputState">Type</label>
-      <select id="inputState" class="form-control">
+      <select id="pizza_name" class="form-control">
         <option selected>Choose...</option>
         <option>Cheese</option>
         <option>Special</option>
@@ -84,7 +85,7 @@ Menu
     </div>
     <div class="form-group col-md-2">
       <label for="inputState">Toppings</label>
-      <select id="inputState" class="form-control">
+      <select id="pizza_topping_nb" class="form-control">
         <option selected>Choose...</option>
         <option>0</option>
         <option>1</option>
@@ -94,10 +95,39 @@ Menu
     </div>
     <div class="form-group col-md-2">
       <label for="inputState">Size</label>
-      <select id="inputState" class="form-control">
+      <select id="pizza_size" class="form-control">
         <option selected>Choose...</option>
         <option>Small</option>
         <option>Large</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="inputState">Topping 1</label>
+      <select id="pizza_top1" class="form-control">
+        <option selected>Choose...</option>
+        {% for topping in Toppings %}
+        <option>{{topping.name}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">Topping 2</label>
+      <select id="pizza_top2" class="form-control">
+        <option selected>Choose...</option>
+        {% for topping in Toppings %}
+        <option>{{topping.name}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">Topping 3</label>
+      <select id="pizza_top3" class="form-control">
+        <option selected>Choose...</option>
+        {% for topping in Toppings %}
+        <option>{{topping.name}}</option>
+        {% endfor %}
       </select>
     </div>
   </div>
@@ -149,7 +179,8 @@ Menu
 {% endblock %}
 
 {% block js %}
-
+<script>
+  // SALADS
   function post_new_salad_order() {
     const request = new XMLHttpRequest();
     var select_bar = document.getElementById("salad");
@@ -163,7 +194,7 @@ Menu
     data.append('salad_type', salad_choice);
     request.send(data);
   };
-
+  // PASTAS
   function post_new_pasta_order() {
     const request = new XMLHttpRequest();
     var select_bar = document.getElementById("pasta");
@@ -178,9 +209,38 @@ Menu
     request.send(data);
   };
 
+  //PIZZAS
+  function post_new_pizza_order() {
+    const request = new XMLHttpRequest();
+    var type_bar = document.getElementById("pizza_type");
+    var name_bar = document.getElementById("pizza_name");
+    var size_bar = document.getElementById("pizza_size");
+    var topping_nb_bar = document.getElementById("pizza_topping_nb");
+    var top1_bar = document.getElementById("pizza_top1");
+    var top2_bar = document.getElementById("pizza_top2");
+    var top3_bar = document.getElementById("pizza_top3");
+
+    request.open('POST', '/order_pizza');
+
+    request.onload = () => {
+        location.reload();
+    };
+    const data = new FormData();
+    data.append('type', type_bar.options[type_bar.selectedIndex].text);
+    data.append('name', name_bar.options[name_bar.selectedIndex].text);
+    data.append('size', size_bar.options[size_bar.selectedIndex].text);
+    data.append('toppings_nb', topping_nb_bar.options[topping_nb_bar.selectedIndex].text);
+    data.append('top1', top1_bar.options[top1_bar.selectedIndex].text);
+    data.append('top2', top2_bar.options[top2_bar.selectedIndex].text);
+    data.append('top3', top3_bar.options[top3_bar.selectedIndex].text);
+    request.send(data);
+  };
+
+  //DEFINE ON SUBMIT EVENTS
    document.addEventListener('DOMContentLoaded', () => {
          document.querySelector('#salad_form').onsubmit = () => post_new_salad_order();
          document.querySelector('#pasta_form').onsubmit = () => post_new_pasta_order();
+         document.querySelector('#pizza_form').onsubmit = () => post_new_pizza_order();
     });
-
+</script>
 {% endblock %}
