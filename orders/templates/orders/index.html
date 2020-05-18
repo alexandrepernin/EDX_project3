@@ -125,7 +125,8 @@ Menu
     </form>
   </div>
   <div class="col-6">
-    <form>
+    <form id="pasta_form" method="post">
+      {% csrf_token %}
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputState">Pastas</label>
@@ -149,22 +150,37 @@ Menu
 
 {% block js %}
 
-function post_new_salad_order() {
-  const request = new XMLHttpRequest();
-  var e = document.getElementById("salad");
-  var salad_choice = e.options[e.selectedIndex].text;
-  request.open('POST', '/order_salad');
+  function post_new_salad_order() {
+    const request = new XMLHttpRequest();
+    var select_bar = document.getElementById("salad");
+    var salad_choice = select_bar.options[select_bar.selectedIndex].text;
+    request.open('POST', '/order_salad');
 
-  request.onload = () => {
-      location.reload();
+    request.onload = () => {
+        location.reload();
+    };
+    const data = new FormData();
+    data.append('salad_type', salad_choice);
+    request.send(data);
   };
-  const data = new FormData();
-  data.append('salad_type', salad_choice);
-  request.send(data);
-};
 
- document.addEventListener('DOMContentLoaded', () => {
-       document.querySelector('#salad_form').onsubmit = () => post_new_salad_order();
-  });
+  function post_new_pasta_order() {
+    const request = new XMLHttpRequest();
+    var select_bar = document.getElementById("pasta");
+    var pasta_choice = select_bar.options[select_bar.selectedIndex].text;
+    request.open('POST', '/order_pasta');
+
+    request.onload = () => {
+        location.reload();
+    };
+    const data = new FormData();
+    data.append('pasta_type', pasta_choice);
+    request.send(data);
+  };
+
+   document.addEventListener('DOMContentLoaded', () => {
+         document.querySelector('#salad_form').onsubmit = () => post_new_salad_order();
+         document.querySelector('#pasta_form').onsubmit = () => post_new_pasta_order();
+    });
 
 {% endblock %}

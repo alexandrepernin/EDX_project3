@@ -68,10 +68,23 @@ def order_salad(request):
     data = request.POST["salad_type"]
     username=request.user.username
     logger.error("Processing code for order_salad: {} for user {}".format(data, username))
-    salad_menu = Salad.objects.filter(name=data)[0]
+    salad_menu = Salad.objects.filter(name=data, menu=True)[0]
     salad = Salad(menu=False, price=salad_menu.price, name=salad_menu.name)
     salad.save()
     order = Order.objects.filter(validated=False, user=request.user)[0]
     order.salads.add(salad)
+    order.save()
+    return JsonResponse({"success": True})
+
+@csrf_exempt
+def order_pasta(request):
+    data = request.POST["pasta_type"]
+    username=request.user.username
+    logger.error("Processing code for order_pasta: {} for user {}".format(data, username))
+    pasta_menu = Pasta.objects.filter(name=data, menu=True)[0]
+    pasta = Pasta(menu=False, price=pasta_menu.price, name=pasta_menu.name)
+    pasta.save()
+    order = Order.objects.filter(validated=False, user=request.user)[0]
+    order.pastas.add(pasta)
     order.save()
     return JsonResponse({"success": True})
