@@ -92,11 +92,44 @@ def order_pasta(request):
 def order_pizza(request):
     logger.error("Processing code for order_pizza")
     username=request.user.username
-    name = request.POST["name"]
-    type = request.POST["type"]
+    #Dealing with name and type
+    pizza = request.POST["pizza"].split(',')
+    pizza = [info.strip() for info in pizza]
+    type = pizza[0]
+    type = type[0].lower() + type[1:]
+    name = pizza[1]
+    name = name[0].lower()+ name[1:]
+    #Dealing with toppings
+    ordered_toppings = []
+    topping_list = Topping.objects.all()
+    topping_list = [x.name for x in topping_list]
+    for id in [1,2,3]:
+        from_form = request.POST[f"top{id}"]
+        if from_form in topping_list:
+            ordered_toppings.append(from_form)
+    ordered_toppings = list(set(ordered_toppings))
+    ## TODO:
+    if name=="special":
+        ordered_toppings = []
+    topping_nb = len(ordered_toppings)
+    #Dealing with size
     size = request.POST["size"]
-    topping_nb = request.POST["toppings_nb"]
-    #pizza_menu = Pizza.objects.filter(menu=True, type=type, name=name, size=size, toppings_nb=topping_nb)[0]
-    logger.error("{}, {}, {} and {} for user {}".format(name, type, size, topping_nb, username))
-    #logger.error(str(pizza_menu))
+    size=size[:1]
+    logger.error(f"{username}: {type} pizza {name} of size {size} with {topping_nb} toppings")
+    #Prices
+    pizza_menu = Pizza.objects.filter(menu=True, type=type, name=name, toppings_nb=topping_nb)[0]
+    price_small = pizza_menu.price_small
+    price_large = pizza_menu.price_large
+    #Adding toppings to pizza
+    pizza_to_add = Pizza(menu=False, type=type, name=name, size=size, price_small=price_small, price_large=price_large, toppings_nb=topping_nb)
+    pizza_to_add.save()
+    for topping in ordered_toppings:
+        topping_to_add = Topping.objects.filter(name=topping)[0]
+        pizza_to_add.toppings.add(topping_to_add)
+    pizza_to_add.save()
+    #Adding pizza to order
+    logger.error("Adding to order the pizza"+str(pizza_to_add))
+    current_order = Order.objects.filter(user=request.user, validated=False)[0]
+    current_order.pizzas.add(pizza_to_add)
+    current_order.save()
     return JsonResponse({"success": True})

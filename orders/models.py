@@ -7,7 +7,7 @@ class Topping(models.Model):
     name = models.CharField(max_length=64)
 
     def __str__(self):
-        return "Topping #{}: {}".format(self.id, self.name)
+        return "{}".format(self.name)
 
 class Pizza(models.Model):
     type = models.CharField(max_length=8, choices=[('regular', 'Regular'), ('sicilian', 'Sicilian')], default='regular')
@@ -20,7 +20,13 @@ class Pizza(models.Model):
     menu = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.type.capitalize()}, {self.name.capitalize()}, {self.toppings_nb} top. (S: ${self.price_small} / L: ${self.price_large})"
+        if self.menu==True:
+            return f"{self.type.capitalize()}, {self.name.capitalize()}, {self.toppings_nb} top. (S: ${self.price_small} / L: ${self.price_large})"
+        else:
+            if self.size=='S':
+                return f"Small {self.type.capitalize()} Pizza, {self.name.capitalize()}, {self.toppings_nb} toppings (${self.price_small})"
+            else:
+                return f"Large {self.type.capitalize()} Pizza, {self.name.capitalize()}, {self.toppings_nb} toppings (${self.price_large})"
 
 class Pasta(models.Model):
     name = models.CharField(max_length=64)
@@ -28,7 +34,7 @@ class Pasta(models.Model):
     menu = models.BooleanField(default=False)
 
     def __str__(self):
-        return "Pasta #{}: {} ({}$)".format(self.id, self.name, self.price)
+        return "{} ({}$)".format(self.name, self.price)
 
 class Salad(models.Model):
     name = models.CharField(max_length=64)
@@ -36,7 +42,7 @@ class Salad(models.Model):
     menu = models.BooleanField(default=False)
 
     def __str__(self):
-        return "Salad #{}: {} ({}$)".format(self.id, self.name, self.price)
+        return "{} ({}$)".format(self.name, self.price)
 
 class Dinner(models.Model):
     name = models.CharField(max_length=64)
