@@ -6,8 +6,23 @@ Menu
 {% block menu_left %}
 <p class="text-center"> Regular Pizzas </p>
 <ul class="padded">
-  {% for pizza in Regular_Pizzas %}
-  <li> {{pizza}} </li>
+  {% for pizza in Pizzas %}
+    {% if pizza.type == "regular" %}
+      {% if pizza.name == "special" %}
+        <li style="text-transform:capitalize;"> {{pizza.name}} (S: ${{pizza.price_small}} / L: ${{pizza.price_large}}) </li>
+      {% endif %}
+
+      {% if pizza.name == "cheese" %}
+        {% if pizza.toppings_nb == 0 %}
+          <li style="text-transform:capitalize;"> {{pizza.name}}, without topping (S: ${{pizza.price_small}} / L: ${{pizza.price_large}}) </li>
+        {% endif %}
+
+        {% if pizza.toppings_nb > 0 %}
+          <li style="text-transform:capitalize;"> {{pizza.name}}, {{pizza.toppings_nb}} toppings (S: ${{pizza.price_small}} / L: ${{pizza.price_large}}) </li>
+        {% endif %}
+
+      {% endif %}
+    {% endif %}
   {% endfor %}
 </ul>
 <p class="text-center"> Toppings </p>
@@ -21,8 +36,23 @@ Menu
 {% block menu_right %}
 <p class="text-center"> Sicilian Pizzas </p>
 <ul>
-  {% for pizza in Sicilian_Pizzas %}
-  <li> {{pizza}} </li>
+  {% for pizza in Pizzas %}
+    {% if pizza.type == "sicilian" %}
+      {% if pizza.name == "special" %}
+        <li style="text-transform:capitalize;"> {{pizza.name}} (S: ${{pizza.price_small}} / L: ${{pizza.price_large}}) </li>
+      {% endif %}
+
+      {% if pizza.name == "cheese" %}
+        {% if pizza.toppings_nb == 0 %}
+          <li style="text-transform:capitalize;"> {{pizza.name}}, without topping (S: ${{pizza.price_small}} / L: ${{pizza.price_large}}) </li>
+        {% endif %}
+
+        {% if pizza.toppings_nb > 0 %}
+          <li style="text-transform:capitalize;"> {{pizza.name}}, {{pizza.toppings_nb}} toppings (S: ${{pizza.price_small}} / L: ${{pizza.price_large}}) </li>
+        {% endif %}
+
+      {% endif %}
+    {% endif %}
   {% endfor %}
 </ul>
 <p class="text-center"> Salads </p>

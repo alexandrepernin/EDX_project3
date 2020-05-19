@@ -20,22 +20,7 @@ class Pizza(models.Model):
     menu = models.BooleanField(default=False)
 
     def __str__(self):
-        if self.menu==True:
-            if self.name=='cheese':
-                if self.toppings_nb==0:
-                    return f"{self.name.capitalize()}, without topping (S: ${self.price_small} / L: ${self.price_large})"
-                else:
-                    return f"{self.name.capitalize()}, {self.toppings_nb} toppings (S: ${self.price_small} / L: ${self.price_large})"
-            else:
-                return f"{self.name.capitalize()} (S: ${self.price_small} / L: ${self.price_large})"
-        else:
-            if self.name=='cheese':
-                if self.toppings_nb==0:
-                    return f"{self.type.capitalize()}: {self.name.capitalize()} without topping (S: ${self.price_small} / L: ${self.price_large})"
-                else:
-                    return f"{self.type.capitalize()}: {self.name.capitalize()}, {self.toppings_nb} toppings (S: ${self.price_small} / L: ${self.price_large})"
-            else:
-                return f"{self.type.capitalize()}: {self.name.capitalize()} (S: ${self.price_small} / L: ${self.price_large})"
+        return f"{self.type.capitalize()}, {self.name.capitalize()}, {self.toppings_nb} top. (S: ${self.price_small} / L: ${self.price_large})"
 
 class Pasta(models.Model):
     name = models.CharField(max_length=64)

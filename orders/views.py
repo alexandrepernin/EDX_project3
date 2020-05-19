@@ -16,8 +16,7 @@ def index(request):
         return render(request, "orders/login.html", {"message": None})
     context = {
         "user": request.user,
-        "Regular_Pizzas": Pizza.objects.filter(type='regular', menu=True),
-        "Sicilian_Pizzas": Pizza.objects.filter(type='sicilian', menu=True),
+        "Pizzas": Pizza.objects.filter(menu=True),
         "Toppings": Topping.objects.all(),
         "Salads": Salad.objects.filter(menu=True),
         "Pastas": Pasta.objects.filter(menu=True),
