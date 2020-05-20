@@ -109,10 +109,23 @@ def order_dinner(request):
 def order_sub(request):
     sub_name = request.POST["sub"]
     sub_size = request.POST["size"][:1]
+    extras = dict()
+    for extra in ["Cheese", "Onions", "Mushrooms", "Green Peppers"]:
+        extras[extra] = request.POST[extra]=='true'
     username=request.user.username
     logger.error("Processing code for order_sub: {} of size {} for user {}".format(sub_name, sub_size, username))
-
     order = Order.objects.filter(validated=False, user=request.user)[0]
+    sub_menu = Sub.objects.filter(menu=True, name=sub_name)[0]
+    sub_to_add = Sub(menu=False, name=sub_name, size=sub_size, price_small=sub_menu.price_small,
+                    price_large=sub_menu.price_large, extra_cheese=extras["Cheese"])
+    sub_to_add.save()
+    for extra in ["Onions", "Mushrooms", "Green Peppers"]:
+        if extras[extra]:
+            sub_to_add.extras.add(SubExtra.objects.filter(name=extra)[0])
+    sub_to_add.save()
+    order.subs.add(sub_to_add)
+    order.save()
+    logger.error("Adding to order the sub"+str(sub_to_add))
     return JsonResponse({"success": True})
 
 @csrf_exempt

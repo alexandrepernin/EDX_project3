@@ -120,6 +120,11 @@ Menu
     <li> {{dinner}} </li>
     {% endfor %}
   </ul>
+  <ul>
+    {% for sub in order.subs.all %}
+    <li> {{sub}} </li>
+    {% endfor %}
+  </ul>
   {% endfor %}
 </ul>
 <!------------------------------------------------------------------------------->
@@ -287,16 +292,23 @@ Menu
         </div>
         <div id="hidden_div" style="display:none;">
           {% for extra in SubExtras %}
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">{{extra}}</label>
-          </div>
+            {% if extra.name == "Green Peppers" %}
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" value="" id="GreenPeppers">
+              <label class="form-check-label" for="defaultCheck1">{{extra}}</label>
+            </div>
+            {% else %}
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" value="" id={{extra}}>
+              <label class="form-check-label" for="defaultCheck1">{{extra}}</label>
+            </div>
+            {% endif %}
           {% endfor %}
         </div>
         </div>
         <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-        <label class="form-check-label" for="defaultCheck2">Extra Cheese</label>
+          <input class="form-check-input" type="checkbox" value="" id="ExtraCheese">
+          <label class="form-check-label" for="defaultCheck2">Extra Cheese</label>
         </div>
 
     </form>
@@ -411,7 +423,10 @@ Menu
     const request = new XMLHttpRequest();
     var sub_bar = document.getElementById("sub");
     var sub_size_bar = document.getElementById("sub_size");
-
+    var cheese_checkbox = document.getElementById("ExtraCheese");
+    var onions_checkbox = document.getElementById("Onions");
+    var mushrooms_checkbox = document.getElementById("Mushrooms");
+    var peppers_checkbox = document.getElementById("GreenPeppers");
     request.open('POST', '/order_sub');
 
     request.onload = () => {
@@ -420,6 +435,10 @@ Menu
     const data = new FormData();
     data.append('sub', sub_bar.options[sub_bar.selectedIndex].text);
     data.append('size', sub_size_bar.options[sub_size_bar.selectedIndex].text);
+    data.append('Cheese', cheese_checkbox.checked.toString());
+    data.append('Onions', onions_checkbox.checked.toString());
+    data.append('Mushrooms', mushrooms_checkbox.checked.toString());
+    data.append('Green Peppers', peppers_checkbox.checked.toString());
     request.send(data);
   };
 
@@ -429,6 +448,7 @@ Menu
          document.querySelector('#pasta_form').onsubmit = () => post_new_pasta_order();
          document.querySelector('#pizza_form').onsubmit = () => post_new_pizza_order();
          document.querySelector('#dinner_form').onsubmit = () => post_new_dinner_order();
+         document.querySelector('#sub_form').onsubmit = () => post_new_sub_order();
     });
 </script>
 {% endblock %}

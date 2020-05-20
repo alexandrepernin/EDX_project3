@@ -73,7 +73,7 @@ class Sub(models.Model):
     price_small = models.FloatField(default=0)
     price_large = models.FloatField(default=0)
     menu = models.BooleanField(default=False)
-    extra_chesse = models.BooleanField(default=False)
+    extra_cheese = models.BooleanField(default=False)
     extras = models.ManyToManyField(SubExtra, blank=True, related_name="subs")
 
     def __str__(self):
