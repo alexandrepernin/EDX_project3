@@ -64,12 +64,19 @@ class Dinner(models.Model):
 class Sub(models.Model):
     name = models.CharField(max_length=64)
     size = models.CharField(max_length=1,choices=[('S', 'Small'), ('L', 'Large')], default='S')
-    price = models.FloatField()
-    extra = models.BooleanField()
+    price_small = models.FloatField(default=0)
+    price_large = models.FloatField(default=0)
     menu = models.BooleanField(default=False)
+    extra_chesse = models.BooleanField(default=False)
 
     def __str__(self):
-        return "Sub #{}: {}. {}.".format(self.id, self.name, self.size)
+        if self.menu==True:
+            return f"{self.name} (S: ${self.price_small} / L: ${self.price_large})"
+        else:
+            if self.size=="S":
+                return f"Small Sub, {self.name} ($ {self.price_small})"
+            else:
+                return f"Large Sub, {self.name} ($ {self.price_large})"
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

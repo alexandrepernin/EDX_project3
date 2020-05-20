@@ -21,6 +21,7 @@ def index(request):
         "Salads": Salad.objects.filter(menu=True),
         "Pastas": Pasta.objects.filter(menu=True),
         "Dinners": Dinner.objects.filter(menu=True),
+        "Subs": Sub.objects.filter(menu=True),
         "Orders": Order.objects.filter(validated=False, user=request.user)
     }
     logger.error("Processing code for index")
