@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Pizza, Topping, Pasta, Salad, Dinner, Sub, Order
+from .models import Pizza, Topping, SubExtra, Pasta, Salad, Dinner, Sub, Order
 
 class PizzaAdmin(admin.ModelAdmin):
       filter_horizontal = ("toppings",)
@@ -22,6 +22,7 @@ class OrderAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Pizza, PizzaAdmin)
 admin.site.register(Topping)
+admin.site.register(SubExtra)
 admin.site.register(Pasta, PastaAdmin)
 admin.site.register(Salad, SaladAdmin)
 admin.site.register(Dinner, DinnerAdmin)

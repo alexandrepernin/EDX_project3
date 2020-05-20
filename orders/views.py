@@ -18,6 +18,7 @@ def index(request):
         "user": request.user,
         "Pizzas": Pizza.objects.filter(menu=True),
         "Toppings": Topping.objects.all(),
+        "SubExtras": SubExtra.objects.all(),
         "Salads": Salad.objects.filter(menu=True),
         "Pastas": Pasta.objects.filter(menu=True),
         "Dinners": Dinner.objects.filter(menu=True),

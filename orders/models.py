@@ -9,6 +9,12 @@ class Topping(models.Model):
     def __str__(self):
         return "{}".format(self.name)
 
+class SubExtra(models.Model):
+    name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return "{}".format(self.name)
+
 class Pizza(models.Model):
     type = models.CharField(max_length=8, choices=[('regular', 'Regular'), ('sicilian', 'Sicilian')], default='regular')
     name = models.CharField(max_length=7, choices=[('cheese', 'Cheese'), ('special', 'Special')], default='cheese')
@@ -68,6 +74,7 @@ class Sub(models.Model):
     price_large = models.FloatField(default=0)
     menu = models.BooleanField(default=False)
     extra_chesse = models.BooleanField(default=False)
+    extras = models.ManyToManyField(SubExtra, blank=True, related_name="subs")
 
     def __str__(self):
         if self.menu==True:
