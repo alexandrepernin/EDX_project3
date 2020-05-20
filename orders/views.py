@@ -106,6 +106,16 @@ def order_dinner(request):
     return JsonResponse({"success": True})
 
 @csrf_exempt
+def order_sub(request):
+    sub_name = request.POST["sub"]
+    sub_size = request.POST["size"][:1]
+    username=request.user.username
+    logger.error("Processing code for order_sub: {} of size {} for user {}".format(sub_name, sub_size, username))
+
+    order = Order.objects.filter(validated=False, user=request.user)[0]
+    return JsonResponse({"success": True})
+
+@csrf_exempt
 def order_pizza(request):
     logger.error("Processing code for order_pizza")
     username=request.user.username

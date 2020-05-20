@@ -16,7 +16,7 @@ class DinnerAdmin(admin.ModelAdmin):
     list_filter = ('menu',)
 
 class OrderAdmin(admin.ModelAdmin):
-    filter_horizontal = ("pizzas","salads", "pastas", "dinners")
+    filter_horizontal = ("pizzas","salads", "pastas", "dinners", "subs")
     list_filter = ('validated',)
 
 # Register your models here.

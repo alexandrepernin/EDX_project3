@@ -127,18 +127,18 @@ Menu
 <!------------------------------------------------------------------------------->
 <hr>
 <p class="text-center"> Add items </p>
-<!---------------------------------PASTAS SELECTION------------------------------>
+<!---------------------------------PIZZA SELECTION------------------------------>
 <form id="pizza_form" method="post">
   {% csrf_token %}
   <div class="form-row">
     <div class="form-group col-md-3">
       <label for="inputState">Pizzas</label>
-      <select id="pizza" class="form-control">
+      <select id="pizza" class="form-control" onchange="showPizzaTopping(this)">
         <option selected>Choose...</option>
-        <option> Regular, Cheese </option>
-        <option> Regular, Special </option>
-        <option> Sicilian, Cheese </option>
-        <option> Sicilian, Special </option>
+        <option value="1"> Regular, Cheese </option>
+        <option value="0"> Regular, Special </option>
+        <option value="1"> Sicilian, Cheese </option>
+        <option value="0"> Sicilian, Special </option>
       </select>
     </div>
     <div class="form-group col-md-1">
@@ -151,7 +151,7 @@ Menu
     </div>
     <div class="form-group col-md-2">
       <label for="inputState">Topping 1</label>
-      <select id="pizza_top1" class="form-control">
+      <select id="pizza_top1" class="form-control" disabled>
         <option selected>...</option>
         <option>No Topping</option>
         {% for topping in Toppings %}
@@ -161,7 +161,7 @@ Menu
     </div>
     <div class="form-group col-md-2">
       <label for="inputState">Topping 2</label>
-      <select id="pizza_top2" class="form-control">
+      <select id="pizza_top2" class="form-control" disabled>
         <option selected>...</option>
         <option>No Topping</option>
         {% for topping in Toppings %}
@@ -171,7 +171,7 @@ Menu
     </div>
     <div class="form-group col-md-2">
       <label for="inputState">Topping 3</label>
-      <select id="pizza_top3" class="form-control">
+      <select id="pizza_top3" class="form-control" disabled>
         <option selected>...</option>
         <option>No Topping</option>
         {% for topping in Toppings %}
@@ -346,6 +346,19 @@ Menu
   };
 
   //PIZZAS
+  function showPizzaTopping(select){
+   if(select.value==1){
+    document.getElementById("pizza_top1").disabled = false;
+    document.getElementById("pizza_top2").disabled = false;
+    document.getElementById("pizza_top3").disabled = false;
+   } else{
+    document.getElementById("pizza_top1").disabled = true;
+    document.getElementById("pizza_top2").disabled = true;
+    document.getElementById("pizza_top3").disabled = true;
+   }
+  }
+
+
   function post_new_pizza_order() {
     const request = new XMLHttpRequest();
     var pizza_bar = document.getElementById("pizza");
@@ -393,6 +406,22 @@ Menu
     document.getElementById('hidden_div').style.display = "none";
    }
   }
+
+  function post_new_sub_order() {
+    const request = new XMLHttpRequest();
+    var sub_bar = document.getElementById("sub");
+    var sub_size_bar = document.getElementById("sub_size");
+
+    request.open('POST', '/order_sub');
+
+    request.onload = () => {
+        location.reload();
+    };
+    const data = new FormData();
+    data.append('sub', sub_bar.options[sub_bar.selectedIndex].text);
+    data.append('size', sub_size_bar.options[sub_size_bar.selectedIndex].text);
+    request.send(data);
+  };
 
   //DEFINE ON SUBMIT EVENTS
    document.addEventListener('DOMContentLoaded', () => {

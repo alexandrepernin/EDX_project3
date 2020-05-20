@@ -91,6 +91,7 @@ class Order(models.Model):
     salads = models.ManyToManyField(Salad, blank=True, related_name="orders")
     pastas = models.ManyToManyField(Pasta, blank=True, related_name="orders")
     dinners = models.ManyToManyField(Dinner, blank=True, related_name="orders")
+    subs = models.ManyToManyField(Sub, blank=True, related_name="orders")
     created = models.DateTimeField(auto_now_add=True)
     validated = models.BooleanField(default=False)
 
