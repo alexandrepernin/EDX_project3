@@ -90,6 +90,20 @@ def order_pasta(request):
     return JsonResponse({"success": True})
 
 @csrf_exempt
+def order_dinner(request):
+    dinner_name = request.POST["dinner"]
+    dinner_size = request.POST["size"][:1]
+    username=request.user.username
+    logger.error("Processing code for order_dinner: {} of size {} for user {}".format(dinner_name, dinner_size, username))
+    dinner_menu = Dinner.objects.filter(name=dinner_name, menu=True)[0]
+    dinner_to_add = Dinner(menu=False, name=dinner_name, size=dinner_size, price_small=dinner_menu.price_small, price_large=dinner_menu.price_large)
+    dinner_to_add.save()
+    order = Order.objects.filter(validated=False, user=request.user)[0]
+    order.dinners.add(dinner_to_add)
+    order.save()
+    return JsonResponse({"success": True})
+
+@csrf_exempt
 def order_pizza(request):
     logger.error("Processing code for order_pizza")
     username=request.user.username

@@ -56,9 +56,9 @@ class Dinner(models.Model):
             return f"{self.name} (S: ${self.price_small} / L: ${self.price_large})"
         else:
             if self.size=="S":
-                return f"{self.size} Dinner, {self.name} ($ {self.price_small})"
+                return f"Small Dinner, {self.name} ($ {self.price_small})"
             else:
-                return f"{self.size} Dinner, {self.name} ($ {self.price_large})"
+                return f"Large Dinner, {self.name} ($ {self.price_large})"
 
 
 class Sub(models.Model):

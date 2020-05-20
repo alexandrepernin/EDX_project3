@@ -95,6 +95,11 @@ Menu
     <li> {{pasta}} </li>
     {% endfor %}
   </ul>
+  <ul>
+    {% for dinner in order.dinners.all %}
+    <li> {{dinner}} </li>
+    {% endfor %}
+  </ul>
   {% endfor %}
 </ul>
 <hr>
@@ -156,11 +161,11 @@ Menu
 </form>
 <br>
 <div class="row">
-  <div class="col-6">
+  <div class="col-2">
     <form id="salad_form" method="post">
       {% csrf_token %}
       <div class="form-row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-12">
           <label for="inputState">Salads</label>
           <select id="salad" class="form-control">
             <option selected>Choose...</option>
@@ -173,11 +178,11 @@ Menu
       <button type="submit" class="btn btn-dark">Add</button>
     </form>
   </div>
-  <div class="col-6">
+  <div class="col-2">
     <form id="pasta_form" method="post">
       {% csrf_token %}
       <div class="form-row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-12">
           <label for="inputState">Pastas</label>
           <select id="pasta" class="form-control">
             <option selected>Choose...</option>
@@ -190,6 +195,31 @@ Menu
       <button type="submit" class="btn btn-dark">Add</button>
     </form>
     </div>
+    <div class="col-3">
+      <form id="dinner_form" method="post">
+        {% csrf_token %}
+        <div class="form-row">
+          <div class="form-group col-md-8">
+            <label for="inputState">Dinners</label>
+            <select id="dinner" class="form-control">
+              <option selected>Choose...</option>
+              {% for dinner in Dinners %}
+              <option>{{dinner.name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">Size</label>
+            <select id="dinner_size" class="form-control">
+              <option selected>...</option>
+              <option> Small </option>
+              <option> Large </option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark">Add</button>
+      </form>
+      </div>
 </div>
 {% endblock %}
 
@@ -251,11 +281,29 @@ Menu
     request.send(data);
   };
 
+  //DINNERS
+  function post_new_dinner_order() {
+    const request = new XMLHttpRequest();
+    var dinner_bar = document.getElementById("dinner");
+    var dinner_size_bar = document.getElementById("dinner_size");
+
+    request.open('POST', '/order_dinner');
+
+    request.onload = () => {
+        location.reload();
+    };
+    const data = new FormData();
+    data.append('dinner', dinner_bar.options[dinner_bar.selectedIndex].text);
+    data.append('size', dinner_size_bar.options[dinner_size_bar.selectedIndex].text);
+    request.send(data);
+  };
+
   //DEFINE ON SUBMIT EVENTS
    document.addEventListener('DOMContentLoaded', () => {
          document.querySelector('#salad_form').onsubmit = () => post_new_salad_order();
          document.querySelector('#pasta_form').onsubmit = () => post_new_pasta_order();
          document.querySelector('#pizza_form').onsubmit = () => post_new_pizza_order();
+         document.querySelector('#dinner_form').onsubmit = () => post_new_dinner_order();
     });
 </script>
 {% endblock %}
