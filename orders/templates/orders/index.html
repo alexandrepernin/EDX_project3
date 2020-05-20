@@ -3,7 +3,11 @@
 Menu
 {% endblock %}
 
+<!------------------------------------------------------------------------------->
+<!---------------------------------LEFT MENU------------------------------------->
+<!------------------------------------------------------------------------------->
 {% block menu_left %}
+<!---------------------------------REGULAR PIZZA---------------------------------->
 <p class="text-center"> Regular Pizzas </p>
 <ul class="padded">
   {% for pizza in Pizzas %}
@@ -25,12 +29,14 @@ Menu
     {% endif %}
   {% endfor %}
 </ul>
+<!---------------------------------TOPPINGS------------------------------------------>
 <p class="text-center"> Toppings </p>
 <ul class="padded">
   {% for topping in Toppings %}
   <li> {{topping}} </li>
   {% endfor %}
 </ul>
+<!---------------------------------SUBS---------------------------------------------->
 <p class="text-center"> Subs </p>
 <ul class="padded">
   {% for sub in Subs %}
@@ -39,8 +45,11 @@ Menu
   <li> Extra Cheese: + $0.50 </li>
 </ul>
 {% endblock %}
-
+<!------------------------------------------------------------------------------->
+<!---------------------------------RIGHT MENU------------------------------------>
+<!------------------------------------------------------------------------------->
 {% block menu_right %}
+<!---------------------------------PIZZAS------------------------------------------>
 <p class="text-center"> Sicilian Pizzas </p>
 <ul>
   {% for pizza in Pizzas %}
@@ -62,12 +71,14 @@ Menu
     {% endif %}
   {% endfor %}
 </ul>
+<!---------------------------------SALADS---------------------------------------------->
 <p class="text-center"> Salads </p>
 <ul>
   {% for salad in Salads %}
   <li> {{salad}} </li>
   {% endfor %}
 </ul>
+<!---------------------------------SALADS---------------------------------------------->
 <p class="text-center"> Pastas </p>
 <ul>
   {% for pasta in Pastas %}
@@ -81,7 +92,9 @@ Menu
   {% endfor %}
 </ul>
 {% endblock %}
-
+<!------------------------------------------------------------------------------->
+<!---------------------------------SHOPPING CARD--------------------------------->
+<!------------------------------------------------------------------------------->
 {% block choice %}
 <p class="text-center"> Shopping Card </p>
 <ul>
@@ -109,9 +122,12 @@ Menu
   </ul>
   {% endfor %}
 </ul>
+<!------------------------------------------------------------------------------->
+<!---------------------------------SELECTION------------------------------------->
+<!------------------------------------------------------------------------------->
 <hr>
 <p class="text-center"> Add items </p>
-
+<!---------------------------------PASTAS SELECTION------------------------------>
 <form id="pizza_form" method="post">
   {% csrf_token %}
   <div class="form-row">
@@ -163,16 +179,20 @@ Menu
         {% endfor %}
       </select>
     </div>
+    <div class="form-group col-md-2" style="padding-top:3%;">
+      <button type="submit" class="btn btn-dark">Add</button>
     </div>
-  <button type="submit" class="btn btn-dark">Add</button>
+    </div>
+
 </form>
 <br>
+<!---------------------------------PASTAS/SALADS/DINNERS SELECTION------------------------------>
 <div class="row">
-  <div class="col-2">
+  <div class="col-3">
     <form id="salad_form" method="post">
       {% csrf_token %}
       <div class="form-row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-8">
           <label for="inputState">Salads</label>
           <select id="salad" class="form-control">
             <option selected>Choose...</option>
@@ -181,15 +201,17 @@ Menu
             {% endfor %}
           </select>
         </div>
+        <div class="form-group col-md-2" style="padding-top:14%;">
+          <button type="submit" class="btn btn-dark">Add</button>
+        </div>
       </div>
-      <button type="submit" class="btn btn-dark">Add</button>
     </form>
   </div>
-  <div class="col-2">
+  <div class="col-4">
     <form id="pasta_form" method="post">
       {% csrf_token %}
       <div class="form-row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-8">
           <label for="inputState">Pastas</label>
           <select id="pasta" class="form-control">
             <option selected>Choose...</option>
@@ -198,15 +220,17 @@ Menu
             {% endfor %}
           </select>
         </div>
+        <div class="form-group col-md-2" style="padding-top:10%;">
+          <button type="submit" class="btn btn-dark">Add</button>
+        </div>
       </div>
-      <button type="submit" class="btn btn-dark">Add</button>
     </form>
     </div>
-    <div class="col-3">
+    <div class="col-5">
       <form id="dinner_form" method="post">
         {% csrf_token %}
         <div class="form-row">
-          <div class="form-group col-md-8">
+          <div class="form-group col-md-5">
             <label for="inputState">Dinners</label>
             <select id="dinner" class="form-control">
               <option selected>Choose...</option>
@@ -215,7 +239,7 @@ Menu
               {% endfor %}
             </select>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-3">
             <label for="inputState">Size</label>
             <select id="dinner_size" class="form-control">
               <option selected>...</option>
@@ -223,66 +247,80 @@ Menu
               <option> Large </option>
             </select>
           </div>
+          <div class="form-group col-md-2" style="padding-top:8%;">
+            <button type="submit" class="btn btn-dark">Add</button>
+          </div>
         </div>
-        <button type="submit" class="btn btn-dark">Add</button>
       </form>
       </div>
-      <div class="col-5">
-        <form id="sub_form" method="post">
-          {% csrf_token %}
-          <div class="form-row">
-            <div class="form-group col-md-7">
-              <label for="inputState">Subs</label>
-              <select id="sub" class="form-control" onchange="showDiv(this)">
-                <option selected>Choose...</option>
-                {% for sub in Subs %}
-                  {% if sub.name == "Steak" %}
-                    <option value="1">{{sub.name}}</option>
-                  {% else %}
-                    <option value="0">{{sub.name}}</option>
-                  {% endif %}
-                {% endfor %}
-              </select>
-            </div>
-            <div class="form-group col-md-3">
-              <label for="inputState">Size</label>
-              <select id="sub_size" class="form-control">
-                <option selected>...</option>
-                <option> Small </option>
-                <option> Large </option>
-              </select>
-            </div>
-            <div id="hidden_div" style="display:none;">
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-              <label class="form-check-label" for="defaultCheck1">
-                Mushrooms
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-            <label class="form-check-label" for="defaultCheck2">Green Peppers</label>
-            </div>
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-            <label class="form-check-label" for="defaultCheck2">Onions</label>
-            </div>
-            </div>
-            </div>
-            <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-            <label class="form-check-label" for="defaultCheck2">Extra Cheese</label>
-            </div>
-          <button type="submit" class="btn btn-dark">Add</button>
-        </form>
+</div>
+<!---------------------------------SUB SELECTION------------------------------>
+<div class="row">
+  <div class="col-5">
+    <form id="sub_form" method="post">
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="form-group col-md-7">
+          <label for="inputState">Subs</label>
+          <select id="sub" class="form-control" onchange="showDiv(this)">
+            <option selected>Choose...</option>
+            {% for sub in Subs %}
+              {% if sub.name == "Steak" %}
+                <option value="1">{{sub.name}}</option>
+              {% else %}
+                <option value="0">{{sub.name}}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
         </div>
+        <div class="form-group col-md-3">
+          <label for="inputState">Size</label>
+          <select id="sub_size" class="form-control">
+            <option selected>...</option>
+            <option> Small </option>
+            <option> Large </option>
+          </select>
+        </div>
+        <div class="form-group col-md-2" style="padding-top:8%;">
+          <button type="submit" class="btn btn-dark">Add</button>
+        </div>
+        <div id="hidden_div" style="display:none;">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+          <label class="form-check-label" for="defaultCheck1">
+            Mushrooms
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+        <label class="form-check-label" for="defaultCheck2">Green Peppers</label>
+        </div>
+        <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+        <label class="form-check-label" for="defaultCheck2">Onions</label>
+        </div>
+        </div>
+        </div>
+        <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+        <label class="form-check-label" for="defaultCheck2">Extra Cheese</label>
+        </div>
+
+    </form>
+    </div>
 </div>
 {% endblock %}
 
+<!------------------------------------------------------------------------------->
+<!---------------------------------LOG OUT BUTTON-------------------------------->
+<!------------------------------------------------------------------------------->
 {% block exit %}
 <a href="{% url 'logout' %}" class="btn btn-outline-danger" role="button" aria-pressed="true"> Sign Out </a>
 {% endblock %}
 
+<!------------------------------------------------------------------------------->
+<!---------------------------------JAVASCRIPT------------------------------------>
+<!------------------------------------------------------------------------------->
 {% block js %}
 <script>
   // SALADS
