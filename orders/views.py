@@ -20,6 +20,7 @@ def index(request):
         "Toppings": Topping.objects.all(),
         "Salads": Salad.objects.filter(menu=True),
         "Pastas": Pasta.objects.filter(menu=True),
+        "Dinners": Dinner.objects.filter(menu=True),
         "Orders": Order.objects.filter(validated=False, user=request.user)
     }
     logger.error("Processing code for index")
@@ -108,7 +109,7 @@ def order_pizza(request):
         if from_form in topping_list:
             ordered_toppings.append(from_form)
     ordered_toppings = list(set(ordered_toppings))
-    ## TODO:
+    ## Should not be executed. #TODO=> disable topping submission for specials:
     if name=="special":
         ordered_toppings = []
     topping_nb = len(ordered_toppings)

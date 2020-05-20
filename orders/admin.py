@@ -12,6 +12,9 @@ class SaladAdmin(admin.ModelAdmin):
 class PastaAdmin(admin.ModelAdmin):
     list_filter = ('menu',)
 
+class DinnerAdmin(admin.ModelAdmin):
+    list_filter = ('menu',)
+
 class OrderAdmin(admin.ModelAdmin):
     list_filter = ('validated',)
 
@@ -20,6 +23,6 @@ admin.site.register(Pizza, PizzaAdmin)
 admin.site.register(Topping)
 admin.site.register(Pasta, PastaAdmin)
 admin.site.register(Salad, SaladAdmin)
-admin.site.register(Dinner)
+admin.site.register(Dinner, DinnerAdmin)
 admin.site.register(Sub)
 admin.site.register(Order, OrderAdmin)

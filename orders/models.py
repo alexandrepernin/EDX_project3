@@ -47,11 +47,19 @@ class Salad(models.Model):
 class Dinner(models.Model):
     name = models.CharField(max_length=64)
     size = models.CharField(max_length=1,choices=[('S', 'Small'), ('L', 'Large')], default='S')
-    price = models.FloatField()
+    price_small = models.FloatField(default=0)
+    price_large = models.FloatField(default=0)
     menu = models.BooleanField(default=False)
 
     def __str__(self):
-        return "Dinner Platter #{}: {}. {} ({}$)".format(self.id, self.name, self.size, self.prize)
+        if self.menu==True:
+            return f"{self.name} (S: ${self.price_small} / L: ${self.price_large})"
+        else:
+            if self.size=="S":
+                return f"{self.size} Dinner, {self.name} ($ {self.price_small})"
+            else:
+                return f"{self.size} Dinner, {self.name} ($ {self.price_large})"
+
 
 class Sub(models.Model):
     name = models.CharField(max_length=64)
@@ -68,6 +76,7 @@ class Order(models.Model):
     pizzas = models.ManyToManyField(Pizza, blank=True, related_name="orders")
     salads = models.ManyToManyField(Salad, blank=True, related_name="orders")
     pastas = models.ManyToManyField(Pasta, blank=True, related_name="orders")
+    dinners = models.ManyToManyField(Dinner, blank=True, related_name="orders")
     created = models.DateTimeField(auto_now_add=True)
     validated = models.BooleanField(default=False)
 
