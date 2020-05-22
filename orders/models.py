@@ -94,6 +94,27 @@ class Order(models.Model):
     subs = models.ManyToManyField(Sub, blank=True, related_name="orders")
     created = models.DateTimeField(auto_now_add=True)
     validated = models.BooleanField(default=False)
+    total = models.FloatField(default=0)
+
+    def compute_total(self):
+        self.total=0
+        for pizza in self.pizzas.all():
+            self.total+=pizza.price_small if pizza.size=='S' else pizza.price_large
+        for salad in self.salads.all():
+            self.total+=salad.price
+        for pasta in self.pastas.all():
+            self.total+=pasta.price
+        for dinner in self.dinners.all():
+            self.total+=dinner.price_small if dinner.size=='S' else dinner.price_large
+        for sub in self.subs.all():
+            price=sub.price_small if sub.size=='S' else sub.price_large
+            if sub.extra_cheese:
+                price+=0.50
+            for extra in sub.extras.all():
+                price+=0.50
+            self.total+=price
+        self.save()
+        return False
 
     def __str__(self):
         date=self.created.strftime("%H:%M (%d-%b-%Y)")

@@ -73,9 +73,15 @@ def order_salad(request):
     salad_menu = Salad.objects.filter(name=data, menu=True)[0]
     salad = Salad(menu=False, price=salad_menu.price, name=salad_menu.name)
     salad.save()
-    order = Order.objects.filter(validated=False, user=request.user)[0]
+    order = Order.objects.filter(validated=False, user=request.user)
+    if order:
+        order=order[0]
+    else:
+        order=Order(validated=False, user=request.user)
+        order.save()
     order.salads.add(salad)
     order.save()
+    order.compute_total()
     return JsonResponse({"success": True})
 
 @csrf_exempt
@@ -86,9 +92,15 @@ def order_pasta(request):
     pasta_menu = Pasta.objects.filter(name=data, menu=True)[0]
     pasta = Pasta(menu=False, price=pasta_menu.price, name=pasta_menu.name)
     pasta.save()
-    order = Order.objects.filter(validated=False, user=request.user)[0]
+    order = Order.objects.filter(validated=False, user=request.user)
+    if order:
+        order=order[0]
+    else:
+        order=Order(validated=False, user=request.user)
+        order.save()
     order.pastas.add(pasta)
     order.save()
+    order.compute_total()
     return JsonResponse({"success": True})
 
 @csrf_exempt
@@ -100,9 +112,15 @@ def order_dinner(request):
     dinner_menu = Dinner.objects.filter(name=dinner_name, menu=True)[0]
     dinner_to_add = Dinner(menu=False, name=dinner_name, size=dinner_size, price_small=dinner_menu.price_small, price_large=dinner_menu.price_large)
     dinner_to_add.save()
-    order = Order.objects.filter(validated=False, user=request.user)[0]
+    order = Order.objects.filter(validated=False, user=request.user)
+    if order:
+        order=order[0]
+    else:
+        order=Order(validated=False, user=request.user)
+        order.save()
     order.dinners.add(dinner_to_add)
     order.save()
+    order.compute_total()
     return JsonResponse({"success": True})
 
 @csrf_exempt
@@ -114,7 +132,12 @@ def order_sub(request):
         extras[extra] = request.POST[extra]=='true'
     username=request.user.username
     logger.error("Processing code for order_sub: {} of size {} for user {}".format(sub_name, sub_size, username))
-    order = Order.objects.filter(validated=False, user=request.user)[0]
+    order = Order.objects.filter(validated=False, user=request.user)
+    if order:
+        order=order[0]
+    else:
+        order=Order(validated=False, user=request.user)
+        order.save()
     sub_menu = Sub.objects.filter(menu=True, name=sub_name)[0]
     sub_to_add = Sub(menu=False, name=sub_name, size=sub_size, price_small=sub_menu.price_small,
                     price_large=sub_menu.price_large, extra_cheese=extras["Cheese"])
@@ -125,6 +148,7 @@ def order_sub(request):
     sub_to_add.save()
     order.subs.add(sub_to_add)
     order.save()
+    order.compute_total()
     logger.error("Adding to order the sub"+str(sub_to_add))
     return JsonResponse({"success": True})
 
@@ -169,7 +193,13 @@ def order_pizza(request):
     pizza_to_add.save()
     #Adding pizza to order
     logger.error("Adding to order the pizza"+str(pizza_to_add))
-    current_order = Order.objects.filter(user=request.user, validated=False)[0]
-    current_order.pizzas.add(pizza_to_add)
-    current_order.save()
+    order = Order.objects.filter(user=request.user, validated=False)
+    if order:
+        order=order[0]
+    else:
+        order=Order(validated=False, user=request.user)
+        order.save()
+    order.pizzas.add(pizza_to_add)
+    order.save()
+    order.compute_total()
     return JsonResponse({"success": True})
