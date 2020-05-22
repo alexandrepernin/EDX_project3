@@ -1,46 +1,88 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title> Confirm </title>
+        <title>Confirm</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'orders/styles.css' %}">
+        <link rel="icon" type="image/x-icon" href="{% static "orders/favicon.ico" %}">
     </head>
     <body>
-      <p class="text-center"> Shopping Card </p>
-      <ul>
-        {% for order in Orders %}
-        <li> {{order}}: </li>
-        <li> Pizzas </li>
-        <ul>
-          {% for pizza in order.pizzas.all %}
-          <li> {{pizza}} </li>
-          {% endfor %}
-        </ul>
-        <li> Salads </li>
-        <ul>
-          {% for salad in order.salads.all %}
-          <li> {{salad}} </li>
-          {% endfor %}
-        </ul>
-        <li> Pastas </li>
-        <ul>
-          {% for pasta in order.pastas.all %}
-          <li> {{pasta}} </li>
-          {% endfor %}
-        </ul>
-        <li> Dinners </li>
-        <ul>
-          {% for dinner in order.dinners.all %}
-          <li> {{dinner}} </li>
-          {% endfor %}
-        </ul>
-        <li> Subs </li>
-        <ul>
-          {% for sub in order.subs.all %}
-          <li> {{sub}} </li>
-          {% endfor %}
-        </ul>
-        <li> Total: ${{order.total}} </li>
-        {% endfor %}
-      </ul>
-      <a href="{% url 'confirm' %}">Place Order</a>
+      <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+          <div style="display:inline-block;">
+          <br>
+          <br>
+          <img class="image_confirmation" src ="{% static "orders/pizzaicon.jpg" %}">
+          <br>
+          <h5 class="menu_title"> Shopping Card </h5>
+            {% for order in Orders %}
+            <p class="shopping_list_title"> {{order}}: </p>
+            <hr>
+            <p class="shopping_list_title"> Pizzas </p>
+            <ul>
+                {% for pizza in order.pizzas.all %}
+                <li> {{pizza}} </li>
+                {% empty %}
+                <li> None </li>
+                {% endfor %}
+            </ul>
+            <hr>
+            <p class="shopping_list_title"> Salads </p>
+            <ul>
+                {% for salad in order.salads.all %}
+                <li> Salad: {{salad}} </li>
+                {% empty %}
+                <li> None </li>
+                {% endfor %}
+            </ul>
+            <hr>
+            <p class="shopping_list_title"> Pastas </p>
+                <ul>
+                  {% for pasta in order.pastas.all %}
+                  <li> Pasta: {{pasta}} </li>
+                  {% empty %}
+                  <li> None </li>
+                  {% endfor %}
+                </ul>
+            <hr>
+            <p class="shopping_list_title"> Dinner </p>
+            <ul>
+              {% for dinner in order.dinners.all %}
+              <li> Dinner: {{dinner}} </li>
+              {% empty %}
+              <li> None </li>
+              {% endfor %}
+            </ul>
+            <hr>
+            <p class="shopping_list_title"> Subs </p>
+            <ul>
+              {% for sub in order.subs.all %}
+              <li> Sub: {{sub}} </li>
+              {% empty %}
+              <li> None </li>
+              {% endfor %}
+            </ul>
+            <hr>
+            <p class="shopping_list_title"> Total: ${{order.total}} </p>
+            {% endfor %}
+            <div style="text-align:center;">
+            <a href="{% url 'confirm' %}" class="btn btn-outline-dark" role="button" aria-pressed="true">Confirm and Pay</a>
+            </div>
+            <br>
+            <div style="text-align:center;">
+            <a href="{% url 'index' %}" class="btn btn-outline-secondary" role="button" aria-pressed="true">Back to Menu</a>
+            </div>
+        </div>
+        </div>
+
+        <div class="col-3"></div>
+        <div class="col-1">
+          <br>
+          <a href="{% url 'logout' %}" class="btn btn-outline-danger" role="button" aria-pressed="true"> Sign Out </a>
+        </div>
+      </div>
     </body>
 </html>

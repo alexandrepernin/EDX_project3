@@ -156,6 +156,7 @@ Menu
 <hr>
 <h5 class="menu_title"> Add items </h5>
 <!---------------------------------PIZZA SELECTION------------------------------>
+
 <form id="pizza_form" method="post">
   {% csrf_token %}
   <div class="form-row">
@@ -207,7 +208,7 @@ Menu
         {% endfor %}
       </select>
     </div>
-    <div class="form-group col-md-2" style="padding-top:3%;">
+    <div class="form-group col-md-2" style="padding-top:4%;">
       <button id="pizza_button" type="submit" class="btn btn-dark" disabled>Add</button>
     </div>
     </div>
@@ -229,7 +230,7 @@ Menu
             {% endfor %}
           </select>
         </div>
-        <div class="form-group col-md-2" style="padding-top:14%;">
+        <div class="form-group col-md-2" style="padding-top:18%;">
           <button id="salad_button" type="submit" class="btn btn-dark" disabled>Add</button>
         </div>
       </div>
@@ -248,7 +249,7 @@ Menu
             {% endfor %}
           </select>
         </div>
-        <div class="form-group col-md-2" style="padding-top:10%;">
+        <div class="form-group col-md-2" style="padding-top:13%;">
           <button id="pasta_button" type="submit" class="btn btn-dark" disabled>Add</button>
         </div>
       </div>
@@ -275,7 +276,7 @@ Menu
               <option value="1"> Large </option>
             </select>
           </div>
-          <div class="form-group col-md-2" style="padding-top:8%;">
+          <div class="form-group col-md-2" style="padding-top:10%;">
             <button id="dinner_button" type="submit" class="btn btn-dark" disabled>Add</button>
           </div>
         </div>
@@ -310,7 +311,7 @@ Menu
             <option value="1"> Large </option>
           </select>
         </div>
-        <div class="form-group col-md-2" style="padding-top:8%;">
+        <div class="form-group col-md-2" style="padding-top:10%;">
           <button id="sub_button" type="submit" class="btn btn-dark" disabled>Add</button>
         </div>
         <div id="hidden_sub_div" style="display:none;">
