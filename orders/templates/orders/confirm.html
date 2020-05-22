@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Confirm </title>
+    </head>
+    <body>
+      <p class="text-center"> Shopping Card </p>
+      <ul>
+        {% for order in Orders %}
+        <li> {{order}}: </li>
+        <li> Pizzas </li>
+        <ul>
+          {% for pizza in order.pizzas.all %}
+          <li> {{pizza}} </li>
+          {% endfor %}
+        </ul>
+        <li> Salads </li>
+        <ul>
+          {% for salad in order.salads.all %}
+          <li> {{salad}} </li>
+          {% endfor %}
+        </ul>
+        <li> Pastas </li>
+        <ul>
+          {% for pasta in order.pastas.all %}
+          <li> {{pasta}} </li>
+          {% endfor %}
+        </ul>
+        <li> Dinners </li>
+        <ul>
+          {% for dinner in order.dinners.all %}
+          <li> {{dinner}} </li>
+          {% endfor %}
+        </ul>
+        <li> Subs </li>
+        <ul>
+          {% for sub in order.subs.all %}
+          <li> {{sub}} </li>
+          {% endfor %}
+        </ul>
+        <li> Total: ${{order.total}} </li>
+        {% endfor %}
+      </ul>
+    </body>
+</html>

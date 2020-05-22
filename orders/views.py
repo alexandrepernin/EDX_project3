@@ -28,6 +28,14 @@ def index(request):
     logger.error("Processing code for index")
     return render(request, "orders/index.html", context)
 
+def confirm_shopping(request):
+    if not request.user.is_authenticated:
+        return render(request, "orders/login.html", {"message": None})
+    context = {
+        "Orders": Order.objects.filter(validated=False, user=request.user)
+    }
+    return render(request, "orders/confirm.html", context)
+
 def login_view(request):
     if request.method=="GET":
         return render(request, "orders/login.html")
