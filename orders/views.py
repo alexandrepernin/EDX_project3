@@ -28,13 +28,24 @@ def index(request):
     logger.error("Processing code for index")
     return render(request, "orders/index.html", context)
 
-def confirm_shopping(request):
+def ask_confirmation(request):
     if not request.user.is_authenticated:
         return render(request, "orders/login.html", {"message": None})
     context = {
         "Orders": Order.objects.filter(validated=False, user=request.user)
     }
     return render(request, "orders/confirm.html", context)
+
+def confirm(request):
+    if not request.user.is_authenticated:
+        return render(request, "orders/login.html", {"message": None})
+    order = Order.objects.filter(validated=False, user=request.user)
+    if order:
+        order = order[0]
+    order.validated=True
+    order.save()
+    message="Thanks for shopping with us!"
+    return render(request, "orders/thanks.html", {"message":message})
 
 def login_view(request):
     if request.method=="GET":

@@ -114,36 +114,49 @@ Menu
   <ul>
     {% for pizza in order.pizzas.all %}
     <li> {{pizza}} </li>
+    {% empty %}
+    <li> No pizza </li>
     {% endfor %}
   </ul>
   <li> Salads </li>
   <ul>
     {% for salad in order.salads.all %}
     <li> {{salad}} </li>
+    {% empty %}
+    <li> No salad </li>
     {% endfor %}
   </ul>
   <li> Pastas </li>
   <ul>
     {% for pasta in order.pastas.all %}
     <li> {{pasta}} </li>
+    {% empty %}
+    <li> No pasta </li>
     {% endfor %}
   </ul>
   <li> Dinners </li>
   <ul>
     {% for dinner in order.dinners.all %}
     <li> {{dinner}} </li>
+    {% empty %}
+    <li> No dinner </li>
     {% endfor %}
   </ul>
   <li> Subs </li>
   <ul>
     {% for sub in order.subs.all %}
     <li> {{sub}} </li>
+    {% empty %}
+    <li> No sub </li>
     {% endfor %}
   </ul>
   <li> Total: ${{order.total}} </li>
+  <a href="{% url 'ask_confirmation' %}">Check out</a>
+  {% empty %}
+  <p> Nothing in your shopping list yet!
   {% endfor %}
 </ul>
-<a href="{% url 'confirm' %}">Check out</a>
+
 <!------------------------------------------------------------------------------->
 <!---------------------------------SELECTION------------------------------------->
 <!------------------------------------------------------------------------------->
