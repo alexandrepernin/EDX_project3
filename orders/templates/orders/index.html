@@ -111,7 +111,7 @@ Menu
 {% block choice %}
 <div style="text-align: center;">
 <div style="display:inline-block;">
-<h5 class="menu_title"> Shopping Card </h5>
+<h5 class="menu_title"> Shopping List </h5>
   {% for order in Orders %}
   <p class="shopping_list_title"> {{order}}: </p>
   <ul>
@@ -146,7 +146,7 @@ Menu
   <p class="shopping_list_title"> Total: ${{order.total}} </p>
   <a href="{% url 'ask_confirmation' %}" class="btn btn-outline-dark" role="button" aria-pressed="true">Check out</a>
   {% empty %}
-  <p> Nothing in your shopping list yet!
+  <p class="shopping_list_title"> Nothing in your shopping list yet!
   {% endfor %}
 </div>
 </div>
