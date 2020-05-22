@@ -199,15 +199,15 @@ Menu
       <div class="form-row">
         <div class="form-group col-md-8">
           <label for="inputState">Salads</label>
-          <select id="salad" class="form-control">
-            <option selected>Choose...</option>
+          <select id="salad" class="form-control" onchange="enableSaladOrder(this)">
+            <option value="0" selected>Choose...</option>
             {% for salad in Salads %}
-            <option>{{salad.name}}</option>
+            <option value="1">{{salad.name}}</option>
             {% endfor %}
           </select>
         </div>
         <div class="form-group col-md-2" style="padding-top:14%;">
-          <button type="submit" class="btn btn-dark">Add</button>
+          <button id="salad_button" type="submit" class="btn btn-dark" disabled>Add</button>
         </div>
       </div>
     </form>
@@ -218,15 +218,15 @@ Menu
       <div class="form-row">
         <div class="form-group col-md-8">
           <label for="inputState">Pastas</label>
-          <select id="pasta" class="form-control">
-            <option selected>Choose...</option>
+          <select id="pasta" class="form-control" onchange="enablePastaOrder(this)">
+            <option value="0" selected>Choose...</option>
             {% for pasta in Pastas %}
-            <option>{{pasta.name}}</option>
+            <option value="1">{{pasta.name}}</option>
             {% endfor %}
           </select>
         </div>
         <div class="form-group col-md-2" style="padding-top:10%;">
-          <button type="submit" class="btn btn-dark">Add</button>
+          <button id="pasta_button" type="submit" class="btn btn-dark" disabled>Add</button>
         </div>
       </div>
     </form>
@@ -237,23 +237,23 @@ Menu
         <div class="form-row">
           <div class="form-group col-md-5">
             <label for="inputState">Dinners</label>
-            <select id="dinner" class="form-control">
-              <option selected>Choose...</option>
+            <select id="dinner" class="form-control" onchange="enableOrder('dinner', 'dinner_size', 'dinner_button')">
+              <option value="0" selected>Choose...</option>
               {% for dinner in Dinners %}
-              <option>{{dinner.name}}</option>
+              <option value="1">{{dinner.name}}</option>
               {% endfor %}
             </select>
           </div>
           <div class="form-group col-md-3">
             <label for="inputState">Size</label>
-            <select id="dinner_size" class="form-control">
-              <option selected>...</option>
-              <option> Small </option>
-              <option> Large </option>
+            <select id="dinner_size" class="form-control" onchange="enableOrder('dinner', 'dinner_size', 'dinner_button')">
+              <option selected value="0">...</option>
+              <option value="1"> Small </option>
+              <option value="1"> Large </option>
             </select>
           </div>
           <div class="form-group col-md-2" style="padding-top:8%;">
-            <button type="submit" class="btn btn-dark">Add</button>
+            <button id="dinner_button" type="submit" class="btn btn-dark" disabled>Add</button>
           </div>
         </div>
       </form>
@@ -288,7 +288,7 @@ Menu
           </select>
         </div>
         <div class="form-group col-md-2" style="padding-top:8%;">
-          <button type="submit" class="btn btn-dark">Add</button>
+          <button id="sub_button" type="submit" class="btn btn-dark" disabled>Add</button>
         </div>
         <div id="hidden_div" style="display:none;">
           {% for extra in SubExtras %}
@@ -328,6 +328,27 @@ Menu
 <!------------------------------------------------------------------------------->
 {% block js %}
 <script>
+  //Enabling Order Buttons on Select Conditions
+  //Salads
+  function enableSaladOrder(select){
+    if(select.value==1){document.getElementById("salad_button").disabled = false;}
+    else{document.getElementById("salad_button").disabled = true;}
+  }
+  //Pastas
+   function enablePastaOrder(select){
+     if(select.value==1){document.getElementById("pasta_button").disabled=false;}
+     else{document.getElementById("pasta_button").disabled=true;}
+   }
+   //Dinners
+   function enableOrder(select_id1, select_id2, button_id){
+     var select_1=document.getElementById(select_id1);
+     var select_2=document.getElementById(select_id2);
+     if (select_1.value==1 && select_2.value==1){
+       document.getElementById(button_id).disabled=false;
+     }
+     else {document.getElementById(button_id).disabled=true;}
+   }
+
   // SALADS
   function post_new_salad_order() {
     const request = new XMLHttpRequest();
