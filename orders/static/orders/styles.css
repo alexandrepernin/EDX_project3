@@ -1,5 +1,12 @@
-.text-center {
+.title {
   text-align: center;
+  font-family: "American Typewriter", serif;
+}
+
+.menu_title {
+  text-align:center;
+  color: grey;
+  font-family: "American Typewriter", serif;
 }
 
 .image {
@@ -11,6 +18,14 @@
 }
 
 .image_menu {
+  width:100px;
+  -ms-interpolation-mode:bicubic;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.image_order {
   width:100px;
   -ms-interpolation-mode:bicubic;
   display: block;
@@ -38,8 +53,23 @@
 ul {
   list-style-type: none;
   font-size: 80%;
+  font-family: "American Typewriter", serif;
 }
 
 .padded {
   padding-left:15%;
+}
+
+.selection_field_title {
+  font-family: "American Typewriter", serif;
+}
+
+.checkbox_title {
+  font-family: "American Typewriter", serif;
+  font-size: 80%;
+}
+
+.shopping_list_title {
+  font-family: "American Typewriter", serif;
+  text-align:center;
 }

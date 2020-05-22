@@ -8,7 +8,7 @@ Menu
 <!------------------------------------------------------------------------------->
 {% block menu_left %}
 <!---------------------------------REGULAR PIZZA---------------------------------->
-<p class="text-center"> Regular Pizzas </p>
+<h5 class="menu_title"> Regular Pizzas </h5>
 <ul class="padded">
   {% for pizza in Pizzas %}
     {% if pizza.type == "regular" %}
@@ -29,15 +29,15 @@ Menu
     {% endif %}
   {% endfor %}
 </ul>
-<!---------------------------------TOPPINGS------------------------------------------>
-<p class="text-center"> Toppings </p>
+<!---------------------------------PASTAS---------------------------------------------->
+<h5 class="menu_title" class="text-center"> Pastas </h5>
 <ul class="padded">
-  {% for topping in Toppings %}
-  <li> {{topping}} </li>
+  {% for pasta in Pastas %}
+  <li> {{pasta}} </li>
   {% endfor %}
 </ul>
 <!---------------------------------SUBS---------------------------------------------->
-<p class="text-center"> Subs </p>
+<h5 class="menu_title"> Subs </h5>
 <ul class="padded">
   {% for sub in Subs %}
     {% if sub.name == "Steak" %}
@@ -51,7 +51,9 @@ Menu
       <li> {{sub}} </li>
     {% endif %}
   {% endfor %}
-  <li> Extra Cheese on any sub: + $0.50 </li>
+  <ul>
+  <li> + Extra Cheese on any sub: + $0.50 </li>
+  </ul>
 </ul>
 {% endblock %}
 <!------------------------------------------------------------------------------->
@@ -59,7 +61,7 @@ Menu
 <!------------------------------------------------------------------------------->
 {% block menu_right %}
 <!---------------------------------PIZZAS------------------------------------------>
-<p class="text-center"> Sicilian Pizzas </p>
+<h5 class="menu_title"> Sicilian Pizzas </h5>
 <ul>
   {% for pizza in Pizzas %}
     {% if pizza.type == "sicilian" %}
@@ -80,22 +82,23 @@ Menu
     {% endif %}
   {% endfor %}
 </ul>
+<!---------------------------------TOPPINGS------------------------------------------>
+<h5 class="menu_title"> Toppings </h5>
+<ul>
+  {% for topping in Toppings %}
+  <li> {{topping}} </li>
+  {% endfor %}
+</ul>
 <!---------------------------------SALADS---------------------------------------------->
-<p class="text-center"> Salads </p>
+<h5 class="menu_title"> Salads </h5>
 <ul>
   {% for salad in Salads %}
   <li> {{salad}} </li>
   {% endfor %}
 </ul>
-<!---------------------------------PASTAS---------------------------------------------->
-<p class="text-center"> Pastas </p>
-<ul>
-  {% for pasta in Pastas %}
-  <li> {{pasta}} </li>
-  {% endfor %}
-</ul>
+
 <!---------------------------------DINNERS---------------------------------------------->
-<p class="text-center"> Dinner Platters </p>
+<h5 class="menu_title"> Dinner Platters </h5>
 <ul>
   {% for dinner in Dinners %}
   <li> {{dinner}} </li>
@@ -106,70 +109,60 @@ Menu
 <!---------------------------------SHOPPING CARD--------------------------------->
 <!------------------------------------------------------------------------------->
 {% block choice %}
-<p class="text-center"> Shopping Card </p>
-<ul>
+<div style="text-align: center;padding-right:15%;">
+<div style="display:inline-block;">
+<h5 class="menu_title"> Shopping Card </h5>
   {% for order in Orders %}
-  <li> {{order}}: </li>
-  <li> Pizzas </li>
+  <p class="shopping_list_title"> {{order}}: </p>
   <ul>
     {% for pizza in order.pizzas.all %}
-    <li> {{pizza}} </li>
+    <li> Pizza: {{pizza}} </li>
     {% empty %}
-    <li> No pizza </li>
+    <li> Pizza: Nope </li>
     {% endfor %}
-  </ul>
-  <li> Salads </li>
-  <ul>
+
     {% for salad in order.salads.all %}
-    <li> {{salad}} </li>
+    <li> Salad: {{salad}} </li>
     {% empty %}
-    <li> No salad </li>
+    <li> Salad: Nope </li>
     {% endfor %}
-  </ul>
-  <li> Pastas </li>
-  <ul>
+
     {% for pasta in order.pastas.all %}
-    <li> {{pasta}} </li>
+    <li> Pasta: {{pasta}} </li>
     {% empty %}
-    <li> No pasta </li>
+    <li> Pasta: Nope </li>
     {% endfor %}
-  </ul>
-  <li> Dinners </li>
-  <ul>
     {% for dinner in order.dinners.all %}
-    <li> {{dinner}} </li>
+    <li> Dinner: {{dinner}} </li>
     {% empty %}
-    <li> No dinner </li>
+    <li> Dinner: Nope </li>
     {% endfor %}
-  </ul>
-  <li> Subs </li>
-  <ul>
     {% for sub in order.subs.all %}
-    <li> {{sub}} </li>
+    <li> Sub: {{sub}} </li>
     {% empty %}
-    <li> No sub </li>
+    <li> Sub: Nope </li>
     {% endfor %}
   </ul>
-  <li> Total: ${{order.total}} </li>
-  <a href="{% url 'ask_confirmation' %}">Check out</a>
+  <p class="shopping_list_title"> Total: ${{order.total}} </p>
+  <a href="{% url 'ask_confirmation' %}" class="btn btn-outline-dark" role="button" aria-pressed="true">Check out</a>
   {% empty %}
   <p> Nothing in your shopping list yet!
   {% endfor %}
-</ul>
-
+</div>
+</div>
 <!------------------------------------------------------------------------------->
 <!---------------------------------SELECTION------------------------------------->
 <!------------------------------------------------------------------------------->
 <hr>
-<p class="text-center"> Add items </p>
+<h5 class="menu_title"> Add items </h5>
 <!---------------------------------PIZZA SELECTION------------------------------>
 <form id="pizza_form" method="post">
   {% csrf_token %}
   <div class="form-row">
     <div class="form-group col-md-3">
-      <label for="inputState">Pizzas</label>
+      <label for="inputState" class="selection_field_title">Pizzas</label>
       <select id="pizza" class="form-control" onchange="enablePizzaOrder('pizza', 'pizza_size', 'pizza_button')">
-        <option value="0" selected>Choose...</option>
+        <option value="0" selected>...</option>
         <option value="1"> Regular, Cheese </option>
         <option value="2"> Regular, Special </option>
         <option value="1"> Sicilian, Cheese </option>
@@ -177,7 +170,7 @@ Menu
       </select>
     </div>
     <div class="form-group col-md-1">
-      <label for="inputState">Size</label>
+      <label for="inputState" class="selection_field_title">Size</label>
       <select id="pizza_size" class="form-control" onchange="enablePizzaOrder('pizza', 'pizza_size', 'pizza_button')">
         <option value="0" selected>...</option>
         <option value="1">Small</option>
@@ -185,7 +178,7 @@ Menu
       </select>
     </div>
     <div class="form-group col-md-2">
-      <label for="inputState">Topping 1</label>
+      <label for="inputState" class="selection_field_title">Topping 1</label>
       <select id="pizza_top1" class="form-control" disabled>
         <option value="0" selected>...</option>
         <option>No Topping</option>
@@ -195,7 +188,7 @@ Menu
       </select>
     </div>
     <div class="form-group col-md-2">
-      <label for="inputState">Topping 2</label>
+      <label for="inputState" class="selection_field_title">Topping 2</label>
       <select id="pizza_top2" class="form-control" disabled>
         <option value="0" selected>...</option>
         <option>No Topping</option>
@@ -205,7 +198,7 @@ Menu
       </select>
     </div>
     <div class="form-group col-md-2">
-      <label for="inputState">Topping 3</label>
+      <label for="inputState" class="selection_field_title">Topping 3</label>
       <select id="pizza_top3" class="form-control" disabled>
         <option value="0" selected>...</option>
         <option>No Topping</option>
@@ -228,9 +221,9 @@ Menu
       {% csrf_token %}
       <div class="form-row">
         <div class="form-group col-md-8">
-          <label for="inputState">Salads</label>
+          <label for="inputState" class="selection_field_title">Salads</label>
           <select id="salad" class="form-control" onchange="enableSaladOrder(this)">
-            <option value="0" selected>Choose...</option>
+            <option value="0" selected>...</option>
             {% for salad in Salads %}
             <option value="1">{{salad.name}}</option>
             {% endfor %}
@@ -247,9 +240,9 @@ Menu
       {% csrf_token %}
       <div class="form-row">
         <div class="form-group col-md-8">
-          <label for="inputState">Pastas</label>
+          <label for="inputState" class="selection_field_title">Pastas</label>
           <select id="pasta" class="form-control" onchange="enablePastaOrder(this)">
-            <option value="0" selected>Choose...</option>
+            <option value="0" selected>...</option>
             {% for pasta in Pastas %}
             <option value="1">{{pasta.name}}</option>
             {% endfor %}
@@ -266,16 +259,16 @@ Menu
         {% csrf_token %}
         <div class="form-row">
           <div class="form-group col-md-5">
-            <label for="inputState">Dinners</label>
+            <label for="inputState" class="selection_field_title">Dinners</label>
             <select id="dinner" class="form-control" onchange="enableDinnerOrder('dinner', 'dinner_size', 'dinner_button')">
-              <option value="0" selected>Choose...</option>
+              <option value="0" selected>...</option>
               {% for dinner in Dinners %}
               <option value="1">{{dinner.name}}</option>
               {% endfor %}
             </select>
           </div>
           <div class="form-group col-md-3">
-            <label for="inputState">Size</label>
+            <label for="inputState" class="selection_field_title">Size</label>
             <select id="dinner_size" class="form-control" onchange="enableDinnerOrder('dinner', 'dinner_size', 'dinner_button')">
               <option selected value="0">...</option>
               <option value="1"> Small </option>
@@ -297,9 +290,9 @@ Menu
       {% csrf_token %}
       <div class="form-row">
         <div class="form-group col-md-7">
-          <label for="inputState">Subs</label>
+          <label for="inputState" class="selection_field_title">Subs</label>
           <select id="sub" class="form-control" onchange="enableSubOrder('sub','sub_size', 'sub_button')">
-            <option value="0" selected>Choose...</option>
+            <option value="0" selected>...</option>
             {% for sub in Subs %}
               {% if sub.name == "Steak" %}
                 <option value="2">{{sub.name}}</option>
@@ -310,7 +303,7 @@ Menu
           </select>
         </div>
         <div class="form-group col-md-3">
-          <label for="inputState">Size</label>
+          <label for="inputState" class="selection_field_title">Size</label>
           <select id="sub_size" class="form-control" onchange="enableSubOrder('sub','sub_size', 'sub_button')">
             <option value="0" selected>...</option>
             <option value="1"> Small </option>
@@ -324,21 +317,21 @@ Menu
           {% for extra in SubExtras %}
             {% if extra.name == "Green Peppers" %}
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" value="" id="GreenPeppers">
-              <label class="form-check-label" for="defaultCheck1">{{extra}}</label>
+              <input class="form-check-input" type="checkbox" id="GreenPeppers">
+              <label class="checkbox_title">{{extra}}</label>
             </div>
             {% else %}
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" value="" id={{extra}}>
-              <label class="form-check-label" for="defaultCheck1">{{extra}}</label>
+              <input class="form-check-input" type="checkbox" id={{extra}}>
+              <label class="checkbox_title">{{extra}}</label>
             </div>
             {% endif %}
           {% endfor %}
         </div>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="ExtraCheese">
-          <label class="form-check-label" for="defaultCheck2">Extra Cheese</label>
+          <input class="form-check-input" type="checkbox" id="ExtraCheese">
+          <label class="form-check-label" for="defaultCheck2"><p class="checkbox_title">Extra Cheese</p></label>
         </div>
 
     </form>
