@@ -40,9 +40,18 @@ Menu
 <p class="text-center"> Subs </p>
 <ul class="padded">
   {% for sub in Subs %}
-  <li> {{sub}} </li>
+    {% if sub.name == "Steak" %}
+      <li> {{sub}} </li>
+      <ul>
+        {% for extra in SubExtras %}
+        <li>+ {{extra.name}}: $0.50</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <li> {{sub}} </li>
+    {% endif %}
   {% endfor %}
-  <li> Extra Cheese: + $0.50 </li>
+  <li> Extra Cheese on any sub: + $0.50 </li>
 </ul>
 {% endblock %}
 <!------------------------------------------------------------------------------->
@@ -78,13 +87,14 @@ Menu
   <li> {{salad}} </li>
   {% endfor %}
 </ul>
-<!---------------------------------SALADS---------------------------------------------->
+<!---------------------------------PASTAS---------------------------------------------->
 <p class="text-center"> Pastas </p>
 <ul>
   {% for pasta in Pastas %}
   <li> {{pasta}} </li>
   {% endfor %}
 </ul>
+<!---------------------------------DINNERS---------------------------------------------->
 <p class="text-center"> Dinner Platters </p>
 <ul>
   {% for dinner in Dinners %}
