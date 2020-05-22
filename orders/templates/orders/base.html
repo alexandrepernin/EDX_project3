@@ -13,21 +13,23 @@
     <body>
       <br>
       <div class="row">
-        <div class="col-1"></div>
-        <div class="col-4">
+        <div class="col-11"></div>
+        <div class="col-1">{% block exit %} {% endblock %}</div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
           <img class="image_menu" src ="{% static "orders/pizzaicon.jpg" %}">
           <br>
           <h2 class="title"> Menu </h2>
         </div>
-        <div class="col-1"></div>
-        <div class="col-4">
+        <div class="col-6">
           <img class="image_order" src ="{% static "orders/ordericon.jpg" %}">
           <br>
-          <h2 style="padding-left:25%;" class="title">Orders</h2>
+          <h2 class="title">Orders</h2>
         </div>
-        <div class="col-1"></div>
-        <div class="col-1">{% block exit %} {% endblock %}</div>
       </div>
+
       <div class="row">
         <div style="padding-left:4%;padding-top:1%;" class="col-3">
           <div style="border-style:groove;border-width: 3px;">
