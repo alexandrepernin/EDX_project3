@@ -29,10 +29,12 @@ class Pizza(models.Model):
         if self.menu==True:
             return f"{self.type.capitalize()}, {self.name.capitalize()}, {self.toppings_nb} top. (S: ${self.price_small} / L: ${self.price_large})"
         else:
+            topping_string=list(set([topping.name for topping in self.toppings.all()]))
+            topping_string='/'.join(topping_string)
             if self.size=='S':
-                return f"Small {self.type.capitalize()} Pizza, {self.name.capitalize()}, {self.toppings_nb} toppings (${self.price_small})"
+                return f"Small {self.type.capitalize()} Pizza, {self.name.capitalize()}, {self.toppings_nb} toppings {topping_string} (${self.price_small})"
             else:
-                return f"Large {self.type.capitalize()} Pizza, {self.name.capitalize()}, {self.toppings_nb} toppings (${self.price_large})"
+                return f"Large {self.type.capitalize()} Pizza, {self.name.capitalize()}, {self.toppings_nb} toppings {topping_string} (${self.price_large})"
 
 class Pasta(models.Model):
     name = models.CharField(max_length=64)
@@ -113,6 +115,7 @@ class Order(models.Model):
             for extra in sub.extras.all():
                 price+=0.50
             self.total+=price
+        self.total = round(self.total, 2)
         self.save()
         return False
 
