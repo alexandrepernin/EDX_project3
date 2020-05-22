@@ -138,26 +138,26 @@ Menu
   <div class="form-row">
     <div class="form-group col-md-3">
       <label for="inputState">Pizzas</label>
-      <select id="pizza" class="form-control" onchange="showPizzaTopping(this)">
-        <option selected>Choose...</option>
+      <select id="pizza" class="form-control" onchange="enablePizzaOrder('pizza', 'pizza_size', 'pizza_button')">
+        <option value="0" selected>Choose...</option>
         <option value="1"> Regular, Cheese </option>
-        <option value="0"> Regular, Special </option>
+        <option value="2"> Regular, Special </option>
         <option value="1"> Sicilian, Cheese </option>
-        <option value="0"> Sicilian, Special </option>
+        <option value="2"> Sicilian, Special </option>
       </select>
     </div>
     <div class="form-group col-md-1">
       <label for="inputState">Size</label>
-      <select id="pizza_size" class="form-control">
-        <option selected>...</option>
-        <option>Small</option>
-        <option>Large</option>
+      <select id="pizza_size" class="form-control" onchange="enablePizzaOrder('pizza', 'pizza_size', 'pizza_button')">
+        <option value="0" selected>...</option>
+        <option value="1">Small</option>
+        <option value="1">Large</option>
       </select>
     </div>
     <div class="form-group col-md-2">
       <label for="inputState">Topping 1</label>
       <select id="pizza_top1" class="form-control" disabled>
-        <option selected>...</option>
+        <option value="0" selected>...</option>
         <option>No Topping</option>
         {% for topping in Toppings %}
         <option>{{topping.name}}</option>
@@ -167,7 +167,7 @@ Menu
     <div class="form-group col-md-2">
       <label for="inputState">Topping 2</label>
       <select id="pizza_top2" class="form-control" disabled>
-        <option selected>...</option>
+        <option value="0" selected>...</option>
         <option>No Topping</option>
         {% for topping in Toppings %}
         <option>{{topping.name}}</option>
@@ -177,7 +177,7 @@ Menu
     <div class="form-group col-md-2">
       <label for="inputState">Topping 3</label>
       <select id="pizza_top3" class="form-control" disabled>
-        <option selected>...</option>
+        <option value="0" selected>...</option>
         <option>No Topping</option>
         {% for topping in Toppings %}
         <option>{{topping.name}}</option>
@@ -185,7 +185,7 @@ Menu
       </select>
     </div>
     <div class="form-group col-md-2" style="padding-top:3%;">
-      <button type="submit" class="btn btn-dark">Add</button>
+      <button id="pizza_button" type="submit" class="btn btn-dark" disabled>Add</button>
     </div>
     </div>
 
@@ -237,7 +237,7 @@ Menu
         <div class="form-row">
           <div class="form-group col-md-5">
             <label for="inputState">Dinners</label>
-            <select id="dinner" class="form-control" onchange="enableOrder('dinner', 'dinner_size', 'dinner_button')">
+            <select id="dinner" class="form-control" onchange="enableDinnerOrder('dinner', 'dinner_size', 'dinner_button')">
               <option value="0" selected>Choose...</option>
               {% for dinner in Dinners %}
               <option value="1">{{dinner.name}}</option>
@@ -246,7 +246,7 @@ Menu
           </div>
           <div class="form-group col-md-3">
             <label for="inputState">Size</label>
-            <select id="dinner_size" class="form-control" onchange="enableOrder('dinner', 'dinner_size', 'dinner_button')">
+            <select id="dinner_size" class="form-control" onchange="enableDinnerOrder('dinner', 'dinner_size', 'dinner_button')">
               <option selected value="0">...</option>
               <option value="1"> Small </option>
               <option value="1"> Large </option>
@@ -268,29 +268,29 @@ Menu
       <div class="form-row">
         <div class="form-group col-md-7">
           <label for="inputState">Subs</label>
-          <select id="sub" class="form-control" onchange="showDiv(this)">
-            <option selected>Choose...</option>
+          <select id="sub" class="form-control" onchange="enableSubOrder('sub','sub_size', 'sub_button')">
+            <option value="0" selected>Choose...</option>
             {% for sub in Subs %}
               {% if sub.name == "Steak" %}
-                <option value="1">{{sub.name}}</option>
+                <option value="2">{{sub.name}}</option>
               {% else %}
-                <option value="0">{{sub.name}}</option>
+                <option value="1">{{sub.name}}</option>
               {% endif %}
             {% endfor %}
           </select>
         </div>
         <div class="form-group col-md-3">
           <label for="inputState">Size</label>
-          <select id="sub_size" class="form-control">
-            <option selected>...</option>
-            <option> Small </option>
-            <option> Large </option>
+          <select id="sub_size" class="form-control" onchange="enableSubOrder('sub','sub_size', 'sub_button')">
+            <option value="0" selected>...</option>
+            <option value="1"> Small </option>
+            <option value="1"> Large </option>
           </select>
         </div>
         <div class="form-group col-md-2" style="padding-top:8%;">
           <button id="sub_button" type="submit" class="btn btn-dark" disabled>Add</button>
         </div>
-        <div id="hidden_div" style="display:none;">
+        <div id="hidden_sub_div" style="display:none;">
           {% for extra in SubExtras %}
             {% if extra.name == "Green Peppers" %}
             <div class="form-check form-check-inline">
@@ -328,7 +328,7 @@ Menu
 <!------------------------------------------------------------------------------->
 {% block js %}
 <script>
-  //Enabling Order Buttons on Select Conditions
+//--------------------------------ORDER BUTTONS ENABLING CONDITIONS-------------->
   //Salads
   function enableSaladOrder(select){
     if(select.value==1){document.getElementById("salad_button").disabled = false;}
@@ -340,7 +340,7 @@ Menu
      else{document.getElementById("pasta_button").disabled=true;}
    }
    //Dinners
-   function enableOrder(select_id1, select_id2, button_id){
+   function enableDinnerOrder(select_id1, select_id2, button_id){
      var select_1=document.getElementById(select_id1);
      var select_2=document.getElementById(select_id2);
      if (select_1.value==1 && select_2.value==1){
@@ -349,6 +349,72 @@ Menu
      else {document.getElementById(button_id).disabled=true;}
    }
 
+   //SUBS
+   function enableSubOrder(select_id1, select_id2, button_id){
+     var select_1=document.getElementById(select_id1);
+     var select_2=document.getElementById(select_id2);
+     var button=document.getElementById(button_id);
+     if(select_1.value==2){
+     document.getElementById('hidden_sub_div').style.display = "block";
+      if(select_2.value==1){
+        button.disabled=false;
+      }
+      else{
+        button.disabled=true;
+      }
+     } else{
+       document.getElementById("GreenPeppers").checked = false;
+       document.getElementById("Mushrooms").checked = false;
+       document.getElementById("Onions").checked = false;
+       document.getElementById('hidden_sub_div').style.display = "none";
+       if(select_1.value==1 && select_2.value==1){
+         button.disabled=false;
+       }
+       else {button.disabled=true;}
+      }
+   }
+
+   //PIZZAS
+   function enablePizzaOrder(select_id1, select_id2, button_id){
+     var select_1=document.getElementById(select_id1);
+     var select_2=document.getElementById(select_id2);
+     var button=document.getElementById(button_id);
+     if(select_1.value==1){
+       document.getElementById("pizza_top1").disabled = false;
+       document.getElementById("pizza_top2").disabled = false;
+       document.getElementById("pizza_top3").disabled = false;
+       if(select_2.value==1){
+         button.disabled=false;
+       }
+       else{
+         button.disabled=true;
+       }
+     } else if(select_1.value==2){
+       document.getElementById("pizza_top1").disabled = true;
+       document.getElementById("pizza_top2").disabled = true;
+       document.getElementById("pizza_top3").disabled = true;
+       document.getElementById("pizza_top1").value = "0";
+       document.getElementById("pizza_top2").value = "0";
+       document.getElementById("pizza_top3").value = "0";
+       if(select_2.value==1){
+         button.disabled=false;
+       }
+       else{
+         button.disabled=true;
+       }
+      }
+      else {
+        document.getElementById("pizza_top1").disabled = true;
+        document.getElementById("pizza_top2").disabled = true;
+        document.getElementById("pizza_top3").disabled = true;
+        document.getElementById("pizza_top1").value = "0";
+        document.getElementById("pizza_top2").value = "0";
+        document.getElementById("pizza_top3").value = "0";
+        button.disabled=true;
+      }
+     }
+
+//--------------------------------AJAX FOR ORDERS-------------->
   // SALADS
   function post_new_salad_order() {
     const request = new XMLHttpRequest();
@@ -377,19 +443,6 @@ Menu
     data.append('pasta_type', pasta_choice);
     request.send(data);
   };
-
-  //PIZZAS
-  function showPizzaTopping(select){
-   if(select.value==1){
-    document.getElementById("pizza_top1").disabled = false;
-    document.getElementById("pizza_top2").disabled = false;
-    document.getElementById("pizza_top3").disabled = false;
-   } else{
-    document.getElementById("pizza_top1").disabled = true;
-    document.getElementById("pizza_top2").disabled = true;
-    document.getElementById("pizza_top3").disabled = true;
-   }
-  }
 
 
   function post_new_pizza_order() {
@@ -431,15 +484,8 @@ Menu
     request.send(data);
   };
 
-  //SUBS
-  function showDiv(select){
-   if(select.value==1){
-    document.getElementById('hidden_div').style.display = "block";
-   } else{
-    document.getElementById('hidden_div').style.display = "none";
-   }
-  }
 
+  //SUBS
   function post_new_sub_order() {
     const request = new XMLHttpRequest();
     var sub_bar = document.getElementById("sub");
@@ -462,7 +508,7 @@ Menu
     data.append('Green Peppers', peppers_checkbox.checked.toString());
     request.send(data);
   };
-
+//--------------------------------DEFINE ONSUBMIT EVENTS-------------->
   //DEFINE ON SUBMIT EVENTS
    document.addEventListener('DOMContentLoaded', () => {
          document.querySelector('#salad_form').onsubmit = () => post_new_salad_order();
